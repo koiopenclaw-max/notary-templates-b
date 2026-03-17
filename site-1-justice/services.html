@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Услуги – Нотариална Кантора Правосъдие</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --emerald-deep: #065f46;
+      --emerald-mid:  #047857;
+      --emerald-light:#059669;
+      --silver:       #c0c0c0;
+      --silver-light: #e5e7eb;
+      --dark-bg:      #1b1b2f;
+      --dark-card:    #12122a;
+      --white:        #ffffff;
+      --text-muted:   #9ca3af;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: var(--dark-bg); color: var(--white); min-height: 100vh; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(27, 27, 47, 0.96); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(192, 192, 192, 0.15);
+      padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-brand .motif { font-size: 1.6rem; color: var(--emerald-light); }
+    .nav-brand span { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; line-height: 1.2; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--silver); text-decoration: none; transition: color 0.25s; position: relative; padding-bottom: 4px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--emerald-light); transform: scaleX(0); transform-origin: center; transition: transform 0.25s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--white); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--silver); border-radius: 2px; }
+
+    /* PAGE HERO */
+    .page-hero { padding-top: 72px; min-height: 320px; position: relative; display: flex; align-items: flex-end; overflow: hidden; }
+    .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80'); background-size: cover; background-position: center; filter: brightness(0.22); }
+    .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(27,27,47,0.95) 100%); }
+    .page-hero-content { position: relative; z-index: 2; padding: 3rem 2rem; max-width: 1140px; margin: 0 auto; width: 100%; }
+    .breadcrumb { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+    .breadcrumb a { color: var(--emerald-light); text-decoration: none; }
+    .page-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 900; color: var(--white); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.8rem; }
+    .page-title .motif { color: var(--emerald-light); }
+
+    /* SECTIONS */
+    section { padding: 5.5rem 2rem; }
+    .container { max-width: 1140px; margin: 0 auto; }
+    .section-label { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--emerald-light); display: block; margin-bottom: 0.7rem; }
+    .section-title { font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 1rem; }
+    .divider { width: 56px; height: 3px; background: linear-gradient(90deg, var(--emerald-mid), var(--emerald-light)); margin: 1rem 0 1.8rem; border-radius: 2px; }
+
+    /* SERVICES GRID */
+    .services-section { background: #111125; }
+    .services-header { text-align: center; margin-bottom: 3.5rem; }
+    .services-header .section-label, .services-header .section-title { text-align: center; }
+    .services-header .divider { margin: 1rem auto 0; }
+    .services-header p { color: var(--text-muted); font-size: 0.97rem; max-width: 580px; margin: 0 auto; line-height: 1.8; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.8rem; }
+
+    .service-card {
+      background: var(--dark-card);
+      border: 1px solid rgba(192,192,192,0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s, border-color 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-card:hover { border-color: rgba(5,150,105,0.5); box-shadow: 0 12px 40px rgba(5,150,105,0.15); }
+
+    .service-card-img {
+      width: 100%; height: 200px;
+      object-fit: cover;
+      filter: brightness(0.75) saturate(0.8);
+      transition: filter 0.4s;
+    }
+    .service-card:hover .service-card-img { filter: brightness(0.9) saturate(1); }
+
+    .service-card-body { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+    .service-icon-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .service-icon { font-size: 1.8rem; }
+    .service-title { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: var(--white); }
+    .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.2rem; flex: 1; }
+    .service-list { list-style: none; margin-bottom: 1.4rem; }
+    .service-list li { font-size: 0.85rem; color: var(--silver-light); padding: 0.3rem 0; padding-left: 1.2rem; position: relative; }
+    .service-list li::before { content: '›'; position: absolute; left: 0; color: var(--emerald-light); font-weight: 700; }
+    .service-link {
+      font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--emerald-light); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      border-bottom: 1px solid rgba(5,150,105,0.4);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .service-link:hover { color: var(--white); border-color: var(--white); }
+
+    /* PROCESS */
+    .process-section { background: var(--dark-bg); }
+    .process-header { text-align: center; margin-bottom: 3.5rem; }
+    .process-header .divider { margin: 1rem auto 0; }
+
+    .process-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0; position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 36px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, var(--emerald-mid), transparent);
+      z-index: 0;
+    }
+
+    .process-step {
+      text-align: center; padding: 1.5rem 1rem;
+      position: relative; z-index: 1;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .process-step.visible { opacity: 1; transform: translateY(0); }
+
+    .step-num {
+      width: 56px; height: 56px;
+      background: var(--emerald-deep);
+      border: 2px solid var(--emerald-mid);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem; font-weight: 900; color: var(--white);
+    }
+    .step-title { font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .step-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; max-width: 180px; margin: 0 auto; }
+
+    /* PRICING NOTE */
+    .pricing-section { background: #111125; }
+    .pricing-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: center;
+    }
+    .pricing-img {
+      width: 100%; border-radius: 6px;
+      aspect-ratio: 4/3; object-fit: cover;
+      filter: brightness(0.7) saturate(0.8);
+    }
+    .pricing-text p { font-size: 0.97rem; color: var(--silver-light); line-height: 1.85; margin-bottom: 1.2rem; }
+    .pricing-note {
+      background: rgba(6,95,70,0.15);
+      border: 1px solid rgba(5,150,105,0.3);
+      border-radius: 6px; padding: 1.4rem;
+      margin: 1.5rem 0;
+    }
+    .pricing-note p { font-size: 0.87rem; color: var(--silver); margin: 0; }
+    .pricing-note strong { color: var(--emerald-light); }
+
+    .btn { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.85rem 2rem; border-radius: 3px; text-decoration: none; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; display: inline-block; }
+    .btn-primary { background: var(--emerald-mid); color: var(--white); border-color: var(--emerald-mid); }
+    .btn-primary:hover { background: var(--emerald-light); border-color: var(--emerald-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(5,150,105,0.4); }
+
+    /* FOOTER */
+    footer { background: var(--dark-card); border-top: 1px solid rgba(192,192,192,0.1); padding: 3.5rem 2rem 1.5rem; }
+    .footer-grid { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+    .footer-brand .motif { font-size: 2rem; color: var(--emerald-light); display: block; margin-bottom: 0.6rem; }
+    .footer-brand-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.8rem; display: block; }
+    .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+    .footer-col h4 { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--silver); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a { font-size: 0.88rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--emerald-light); }
+    .footer-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 0.3rem; }
+    .footer-info strong { color: var(--silver); }
+    .footer-hours-row { display: flex; justify-content: space-between; font-size: 0.83rem; }
+    .footer-hours-row span:first-child { color: var(--text-muted); }
+    .footer-hours-row span:last-child { color: var(--silver-light); }
+    .footer-bottom { max-width: 1140px; margin: 0 auto; border-top: 1px solid rgba(192,192,192,0.08); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-bottom .motif-small { color: var(--emerald-light); font-size: 0.9rem; }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .slide-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .slide-left.visible { opacity: 1; transform: translateX(0); }
+    .slide-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .slide-right.visible { opacity: 1; transform: translateX(0); }
+
+    @media (max-width: 900px) {
+      .pricing-inner { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; background: rgba(27,27,47,0.98); padding: 1.5rem 2rem; gap: 1.2rem; border-bottom: 1px solid rgba(192,192,192,0.1); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+      section { padding: 4rem 1.2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <span class="motif">⚖</span>
+    <span>Нотариална Кантора<br>Правосъдие</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="about.html">За нотариуса</a></li>
+    <li><a href="services.html" class="active">Услуги</a></li>
+    <li><a href="faq.html">Въпроси</a></li>
+    <li><a href="contact.html">Контакти</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="breadcrumb"><a href="index.html">Начало</a> &rsaquo; Услуги</p>
+    <h1 class="page-title"><span class="motif">⚖</span> Нотариални услуги</h1>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="container">
+    <div class="services-header fade-in">
+      <span class="section-label">Пълен спектър</span>
+      <h2 class="section-title">Нашите услуги</h2>
+      <p>Предлагаме цялостни нотариални услуги с гарантирана правна сигурност. Всяка услуга се извършва лично от нотариуса с максимална прецизност.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- 1 -->
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=70" alt="Нотариални заверки" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-icon-row">
+            <span class="service-icon">✍️</span>
+            <h3 class="service-title">Нотариални заверки</h3>
+          </div>
+          <p class="service-desc">Заверка на подпис, съдържание и дата на частни документи. Удостоверяване на идентичността на подписващия с пълна правна сила.</p>
+          <ul class="service-list">
+            <li>Заверка на подпис върху декларации</li>
+            <li>Заверка на копия от документи</li>
+            <li>Удостоверяване на дата</li>
+            <li>Заверка на преписи</li>
+          </ul>
+          <a href="contact.html" class="service-link">Запази час &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1568219557405-376e23e4f7cf?w=600&q=70" alt="Пълномощни" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-icon-row">
+            <span class="service-icon">📋</span>
+            <h3 class="service-title">Пълномощни</h3>
+          </div>
+          <p class="service-desc">Изготвяне и заверка на всички видове пълномощни – за продажба на имот, управление на автомобил, банкови операции и др.</p>
+          <ul class="service-list">
+            <li>Общо пълномощно</li>
+            <li>Специално пълномощно</li>
+            <li>Пълномощно за чужбина</li>
+            <li>Пълномощно за имотни сделки</li>
+          </ul>
+          <a href="contact.html" class="service-link">Запази час &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=70" alt="Удостоверения" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-icon-row">
+            <span class="service-icon">🏅</span>
+            <h3 class="service-title">Удостоверения</h3>
+          </div>
+          <p class="service-desc">Нотариални удостоверения за различни правни цели – наследствени, за верността на документи, за автентичност на подпис.</p>
+          <ul class="service-list">
+            <li>Удостоверение за наследници</li>
+            <li>Удостоверение за верност</li>
+            <li>Удостоверение за живот</li>
+            <li>Удостоверение за семейно положение</li>
+          </ul>
+          <a href="contact.html" class="service-link">Запази час &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=70" alt="Преписи" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-icon-row">
+            <span class="service-icon">📄</span>
+            <h3 class="service-title">Преписи</h3>
+          </div>
+          <p class="service-desc">Изготвяне на нотариално заверени преписи от документи с пълна правна стойност, еквивалентна на оригинала.</p>
+          <ul class="service-list">
+            <li>Препис от нотариален акт</li>
+            <li>Препис от официален документ</li>
+            <li>Заверен превод (в съдействие)</li>
+            <li>Многостранни преписи</li>
+          </ul>
+          <a href="contact.html" class="service-link">Запази час &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?w=600&q=70" alt="Договори" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-icon-row">
+            <span class="service-icon">🤝</span>
+            <h3 class="service-title">Договори</h3>
+          </div>
+          <p class="service-desc">Изготвяне, проверка и нотариална заверка на разнообразни граждански и търговски договори с пълна правна защита.</p>
+          <ul class="service-list">
+            <li>Договор за наем</li>
+            <li>Договор за заем</li>
+            <li>Брачен договор</li>
+            <li>Договор за дарение</li>
+          </ul>
+          <a href="contact.html" class="service-link">Запази час &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70" alt="Имотни сделки" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-icon-row">
+            <span class="service-icon">🏠</span>
+            <h3 class="service-title">Имотни сделки</h3>
+          </div>
+          <p class="service-desc">Изготвяне на нотариални актове за покупко-продажба, дарение и замяна на недвижими имоти. Проверка на вещноправния статус.</p>
+          <ul class="service-list">
+            <li>Покупко-продажба на имот</li>
+            <li>Дарение на недвижим имот</li>
+            <li>Учредяване на ипотека</li>
+            <li>Суперфиция и сервитути</li>
+          </ul>
+          <a href="contact.html" class="service-link">Запази час &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="container">
+    <div class="process-header fade-in">
+      <span class="section-label">Как работим</span>
+      <h2 class="section-title">Процесът стъпка по стъпка</h2>
+      <p style="color:var(--text-muted); font-size:0.97rem; max-width:560px; margin:0 auto; line-height:1.8;">
+        Ясен и прозрачен процес от първоначалната консултация до финалното изготвяне на документите.
+      </p>
+      <div class="divider"></div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h4 class="step-title">Заявка</h4>
+        <p class="step-desc">Свържете се с нас по телефон, имейл или чрез онлайн формата и опишете нуждата си.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h4 class="step-title">Консултация</h4>
+        <p class="step-desc">Провеждаме подробна консултация и анализираме необходимите документи за вашия случай.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h4 class="step-title">Подготовка</h4>
+        <p class="step-desc">Нотариусът изготвя всички необходими документи с пълна правна прецизност.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h4 class="step-title">Подписване</h4>
+        <p class="step-desc">Страните се явяват лично за подписване и нотариална заверка на документите.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <h4 class="step-title">Вписване</h4>
+        <p class="step-desc">При необходимост документите се вписват в съответните регистри и се предават на страните.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING NOTE -->
+<section class="pricing-section">
+  <div class="container">
+    <div class="pricing-inner">
+      <img
+        src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=700&q=80"
+        alt="Нотариална кантора"
+        class="pricing-img slide-left"
+      />
+      <div class="pricing-text slide-right">
+        <span class="section-label">Такси и разходи</span>
+        <h2 class="section-title">Нотариални такси</h2>
+        <div class="divider"></div>
+        <p>Нотариалните такси в България се определят по Тарифа за нотариалните такси, приета от Министерския съвет. Таксите са фиксирани по закон и не подлежат на договаряне.</p>
+        <p>Размерът на таксата зависи от вида на нотариалното действие и при имотни сделки – от материалния интерес (пазарната стойност на имота).</p>
+        <div class="pricing-note">
+          <p><strong>Важно:</strong> При предварителна консултация ще получите точна информация за дължимите такси за вашия конкретен случай. Консултацията е безплатна.</p>
+        </div>
+        <a href="contact.html" class="btn btn-primary">Запитване за цена</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="motif">⚖</span>
+      <span class="footer-brand-name">Нотариална Кантора Правосъдие</span>
+      <p>Нотариус Елена Стоянова – вписана в Нотариалната камара на Република България. Предоставяме пълен спектър от нотариални услуги в София.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <ul>
+        <li><a href="services.html">Нотариални заверки</a></li>
+        <li><a href="services.html">Пълномощни</a></li>
+        <li><a href="services.html">Удостоверения</a></li>
+        <li><a href="services.html">Договори</a></li>
+        <li><a href="services.html">Имотни сделки</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-info">
+      <h4>Контакти</h4>
+      <p><strong>Адрес:</strong><br>бул. „Витоша" 45, ет. 3<br>1000 София, България</p>
+      <p><strong>Телефон:</strong><br>+359 2 987 6543</p>
+      <p><strong>Имейл:</strong><br>office@kantora-pravosudie.bg</p>
+      <div style="margin-top:0.8rem;">
+        <div class="footer-hours-row"><span>Пон – Пет</span><span>09:00 – 17:30</span></div>
+        <div class="footer-hours-row"><span>Събота</span><span>10:00 – 13:00</span></div>
+        <div class="footer-hours-row"><span>Неделя</span><span>Почивен ден</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Нотариална Кантора Правосъдие. Всички права запазени.</p>
+    <p class="motif-small">⚖ Правна сигурност за всяка стъпка</p>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in, .slide-left, .slide-right, .service-card, .process-step').forEach((el, i) => {
+    if (el.classList.contains('service-card')) el.style.transitionDelay = `${(i % 3) * 0.1}s`;
+    if (el.classList.contains('process-step')) el.style.transitionDelay = `${i * 0.1}s`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

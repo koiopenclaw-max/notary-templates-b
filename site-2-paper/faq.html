@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Въпроси – Нотариус Перо и Печат</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --parchment-light: #f4e4c1;
+      --parchment-mid:   #e8d5a3;
+      --parchment-dark:  #d4bf8a;
+      --sepia-deep:      #704214;
+      --sepia-mid:       #8B6914;
+      --ink-dark:        #2c1810;
+      --ink-mid:         #3d2b1f;
+      --cream:           #fdf6e3;
+      --shadow:          rgba(44,24,16,0.25);
+    }
+
+    body {
+      font-family: 'Crimson Text', Georgia, serif;
+      background-color: var(--parchment-light);
+      color: var(--ink-dark);
+      background-image:
+        radial-gradient(ellipse at 12% 22%, rgba(139,105,20,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 88% 78%, rgba(112,66,20,0.06) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: linear-gradient(180deg, var(--ink-dark) 0%, var(--ink-mid) 100%);
+      border-bottom: 3px solid var(--sepia-mid);
+      padding: 0 2rem;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 3px 12px var(--shadow);
+    }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { font-family: 'IM Fell English', serif; color: var(--parchment-light); font-size: 1.15rem; text-decoration: none; letter-spacing: 0.04em; }
+    .nav-brand span { color: var(--sepia-mid); }
+    .nav-links { display: flex; gap: 0; list-style: none; }
+    .nav-links a {
+      display: block; padding: 0 1.1rem; height: 64px; line-height: 64px;
+      color: var(--parchment-mid); text-decoration: none;
+      font-family: 'Crimson Text', serif; font-size: 1.05rem; letter-spacing: 0.03em;
+      transition: color 0.2s, background 0.2s; border-bottom: 3px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--parchment-light); border-bottom-color: var(--sepia-mid); background: rgba(255,255,255,0.05); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--parchment-light); margin: 5px 0; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn     { from { opacity:0; } to { opacity:1; } }
+    @keyframes unfoldDown {
+      from { opacity:0; max-height:0; transform:translateY(-6px); }
+      to   { opacity:1; max-height:800px; transform:translateY(0); }
+    }
+
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      background:
+        linear-gradient(rgba(44,24,16,0.70), rgba(44,24,16,0.62)),
+        url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&auto=format&fit=crop') center/cover no-repeat;
+      padding: 5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      border: 2px solid rgba(139,105,20,0.3);
+      margin: 20px;
+      pointer-events: none;
+    }
+    .hero-banner h1 { font-family: 'IM Fell English', serif; color: var(--parchment-light); font-size: clamp(1.8rem, 4vw, 3rem); animation: fadeInDown 0.9s ease both; }
+    .hero-banner p { color: var(--parchment-mid); font-style: italic; font-size: 1.2rem; margin-top: 0.8rem; animation: fadeInDown 0.9s 0.25s ease both; }
+    .breadcrumb { color: rgba(232,213,163,0.7); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .breadcrumb a { color: var(--parchment-mid); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ── SECTION ── */
+    .faq-section { padding: 5rem 1.5rem; background: var(--parchment-light); }
+    .section-inner { max-width: 860px; margin: 0 auto; }
+    .section-title {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--ink-dark);
+      text-align: center; margin-bottom: 0.5rem;
+    }
+    .section-title::after {
+      content: ''; display: block; width: 80px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--sepia-mid), transparent);
+      margin: 0.5rem auto 0;
+    }
+    .section-sub { text-align: center; color: var(--sepia-deep); font-size: 1.1rem; font-style: italic; margin-bottom: 3rem; }
+
+    /* ── ACCORDION ── */
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+
+    .faq-item {
+      border: 1px solid var(--parchment-dark);
+      border-bottom: none;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .faq-item:last-child { border-bottom: 1px solid var(--parchment-dark); }
+    .faq-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--parchment-dark);
+      transition: background 0.3s;
+    }
+    .faq-item.open::before { background: var(--sepia-mid); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.3rem 1.6rem 1.3rem 1.8rem;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: rgba(212,191,138,0.15); }
+    .faq-item.open .faq-question { background: rgba(139,105,20,0.07); }
+
+    .faq-q-text {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.1rem;
+      color: var(--ink-dark);
+      line-height: 1.4;
+      flex: 1;
+    }
+    .faq-item.open .faq-q-text { color: var(--sepia-deep); }
+
+    .faq-icon {
+      width: 28px; height: 28px; min-width: 28px;
+      border: 2px solid var(--parchment-dark);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      color: var(--sepia-mid);
+      font-family: monospace;
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+      background: var(--parchment-light);
+      user-select: none;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      border-color: var(--sepia-mid);
+      background: var(--sepia-mid);
+      color: var(--cream);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+      padding: 0 1.8rem;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 600px;
+      padding: 0.2rem 1.8rem 1.5rem;
+    }
+    .faq-answer p {
+      font-size: 1.08rem;
+      color: var(--ink-mid);
+      line-height: 1.8;
+      border-top: 1px dashed var(--parchment-dark);
+      padding-top: 1rem;
+      text-align: justify;
+    }
+    .faq-answer ul {
+      margin: 0.8rem 0 0 1.5rem;
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      line-height: 1.8;
+    }
+    .faq-answer ul li { list-style: disc; }
+
+    /* ── FOLDED PAPER DECORATION ── */
+    .paper-fold {
+      background: var(--cream);
+      border: 1px solid var(--parchment-dark);
+      max-width: 860px;
+      margin: 3rem auto 0;
+      padding: 2rem 2.5rem;
+      position: relative;
+      box-shadow: 3px 3px 0 var(--parchment-dark);
+    }
+    .paper-fold::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      border-style: solid;
+      border-width: 0 0 40px 40px;
+      border-color: transparent transparent var(--parchment-mid) transparent;
+    }
+    .paper-fold::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 40px; height: 40px;
+      background: linear-gradient(225deg, var(--parchment-dark) 49%, transparent 50%);
+    }
+    .paper-fold h3 { font-family: 'IM Fell English', serif; color: var(--ink-dark); font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .paper-fold p { font-size: 1.08rem; color: var(--ink-mid); line-height: 1.75; }
+    .paper-fold a {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--sepia-deep);
+      font-family: 'IM Fell English', serif;
+      text-decoration: none;
+      border-bottom: 1px solid var(--sepia-mid);
+      padding-bottom: 1px;
+      font-size: 1.05rem;
+    }
+    .paper-fold a:hover { color: var(--ink-dark); }
+
+    /* ── DIVIDER ── */
+    .divider { text-align: center; color: var(--sepia-mid); font-size: 1.4rem; letter-spacing: 0.5em; padding: 1rem 0; }
+
+    /* ── FOOTER ── */
+    footer { background: linear-gradient(180deg, #1e110b 0%, var(--ink-dark) 100%); color: var(--parchment-mid); padding: 3.5rem 1.5rem 1.5rem; border-top: 3px solid var(--sepia-mid); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(139,105,20,0.3); }
+    .footer-col h4 { font-family: 'IM Fell English', serif; color: var(--parchment-light); font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(139,105,20,0.4); padding-bottom: 0.5rem; }
+    .footer-col p, .footer-col li { font-size: 0.98rem; line-height: 1.9; list-style: none; }
+    .footer-col a { color: var(--parchment-mid); text-decoration: none; }
+    .footer-col a:hover { color: var(--parchment-light); text-decoration: underline; }
+    .footer-bottom { max-width: 1100px; margin: 1.2rem auto 0; text-align: center; font-size: 0.85rem; color: rgba(232,213,163,0.5); }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--ink-dark); border-bottom: 2px solid var(--sepia-mid); }
+      .nav-links.open { display: flex; }
+      .nav-links a { height: auto; line-height: 1; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .nav-toggle { display: block; }
+      .paper-fold { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Нотариус <span>Перо &amp; Печат</span></a>
+    <button class="nav-toggle" aria-label="Меню" onclick="this.nextElementSibling.classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нотариуса</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="faq.html" class="active">Въпроси</a></li>
+      <li><a href="contact.html">Контакти</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <p class="breadcrumb"><a href="index.html">Начало</a> &rsaquo; Въпроси</p>
+  <h1>Често задавани въпроси</h1>
+  <p>Отговори на най-честите въпроси за нотариалните услуги</p>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-inner">
+    <h2 class="section-title">Въпроси и отговори</h2>
+    <p class="section-sub">Кликнете върху въпрос, за да разкриете отговора</p>
+
+    <div class="faq-list" id="faqList">
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Какво представлява нотариалното удостоверяване на подпис?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Нотариалното удостоверяване на подпис е официален акт, с който нотариусът потвърждава, че даденото лице е подписало документа лично пред него. Нотариусът проверява самоличността на лицето чрез лична карта или паспорт и удостоверява автентичността на подписа. Тази заверка има доказателствена сила пред всички институции в България и в чужбина.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Какви документи трябва да нося за нотариална заверка?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>За извършване на нотариална заверка на подпис е необходимо:</p>
+          <ul>
+            <li>Документ за самоличност (лична карта или паспорт)</li>
+            <li>Документа, който трябва да бъде заверен</li>
+            <li>При необходимост — допълнителни документи в зависимост от вида на действието</li>
+          </ul>
+          <p style="border-top:none; padding-top:0.5rem;">При имотни сделки се изискват допълнителни документи — нотариален акт, скица, данъчна оценка и др. Свържете се с нас предварително за точен списък.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Колко струва нотариалната услуга?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Нотариалните такси в България са законово регламентирани с Тарифата за нотариалните такси към Закона за нотариусите и нотариалната дейност. Нотариусът няма право да начислява по-малко или повече от предвидените суми. Заверката на подпис започва от 6 лв., докато таксите за имотни сделки се определят като процент от стойността на имота. За точна информация за конкретния ви случай, моля свържете се с нас.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Трябва ли да се записвам предварително за час?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>За прости услуги като заверка на подпис или препис можете да дойдете без предварително записване в рамките на работното ни време. За по-сложни услуги като имотни сделки, завещания, брачни договори и учредяване на ипотека е задължително предварителното записване, тъй като те изискват подготовка на документация. Препоръчваме записване и за по-простите услуги в натоварени периоди, за да избегнете чакане.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Мога ли да се свържа с нотариус извън работно време при спешен случай?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Нотариалните действия по принцип се извършват в работно време на кантората. При особено спешни случаи — например тежко болен клиент, нуждаещ се от нотариално завещание — нотариусът може да извърши действието и извън кантората или работното си време, но това изисква предварителна уговорка и е съпроводено с допълнителна такса съгласно тарифата. Свържете се с нас по телефона за такива случаи.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Как се прехвърля недвижим имот при покупко-продажба?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Прехвърлянето на недвижим имот задължително се извършва с нотариален акт. Процесът включва следните стъпки:</p>
+          <ul>
+            <li>Подготовка на необходимите документи (нотариален акт, скица, данъчна оценка, удостоверение за тежести)</li>
+            <li>Изготвяне на проект на нотариален акт от нотариуса</li>
+            <li>Прочитане и подписване на нотариалния акт от страните</li>
+            <li>Вписване на акта в Агенцията по вписванията</li>
+          </ul>
+          <p style="border-top:none; padding-top:0.5rem;">Нашата кантора предоставя пълно обслужване и съдействие при набавяне на всички документи.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Какво е нотариален акт и каква е неговата сила?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Нотариалният акт е официален документ, съставен от нотариус. Той се ползва с т.нар. „обвързваща доказателствена сила" — т.е. фактите, удостоверени в него, се смятат за верни до доказване на противното по съдебен ред. Нотариалните актове за прехвърляне на недвижими имоти са единственият законен начин за придобиване на право на собственост върху имот в България.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Мога ли да упълномощя някого да действа от мое име пред нотариус?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Да, можете да упълномощите друго лице с нотариално заверено пълномощно. При имотни сделки пълномощното трябва да е нотариално заверено и да съдържа изрично описание на имота и конкретните правомощия. Обърнете внимание, че за определени действия — например продажба на собствен имот — пълномощното трябва да бъде изрично и не може да бъде заместено с общо пълномощно.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Колко дълго се пазят нотариалните актове?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Нотариалните актове и книги се съхраняват в кантората на нотариуса за срок от 100 години. При прекратяване дейността на нотариуса архивите се предават на Нотариалната камара. Всяко лице, имащо правен интерес, може да поиска издаване на препис от нотариален акт срещу съответна такса.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Признава ли се нотариалният акт от България в чужбина?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>За да бъде признат български нотариален документ в чужбина, обикновено е необходимо апостилиране — поставяне на специален щемпел (апостил) по реда на Хагската конвенция от 1961 г. България е страна по тази конвенция. Апостилът се поставя от Министерство на правосъдието. За страни, с които България е сключила двустранни договори за правна помощ, апостил не е необходим. Свържете се с нас за конкретна консултация.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="paper-fold">
+      <h3>Не намерихте отговор на въпроса си?</h3>
+      <p>Ако имате въпрос, на който не сте намерили отговор тук, не се колебайте да се свържете с нас. Нотариус Борисова и нейният екип са готови да ви помогнат лично.</p>
+      <a href="contact.html">Свържете се с нас &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider">— ✦ ✦ ✦ —</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Нотариус Перо и Печат</h4>
+      <p>Нотариална кантора с дългогодишен опит в сферата на нотариалните услуги в Пловдив и региона.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Бързи връзки</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Работно време</h4>
+      <p>Понеделник – Петък<br>09:00 – 17:30</p>
+      <p style="margin-top:0.5rem;">Събота – Неделя<br>Почивен ден</p>
+    </div>
+    <div class="footer-col">
+      <h4>Контакти</h4>
+      <p>📍 ул. „Цар Борис III" 14, ет. 2<br>Пловдив 4000</p>
+      <p style="margin-top:0.5rem;">📞 <a href="tel:+35932123456">032 123 456</a></p>
+      <p>✉ <a href="mailto:info@notarius-plovdiv.bg">info@notarius-plovdiv.bg</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Нотариус Перо и Печат – Пловдив. Всички права запазени.</p>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var items = document.querySelectorAll('.faq-item');
+    items.forEach(function(item) {
+      var btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', function() {
+        var isOpen = item.classList.contains('open');
+        // Close all
+        items.forEach(function(el) {
+          el.classList.remove('open');
+          el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        // Toggle clicked (open if was closed)
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контакти – Нотариална Кантора Тера</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terra-main:  #c2703e;
+    --terra-light: #d4845a;
+    --terra-dark:  #b85c38;
+    --olive-main:  #556b2f;
+    --olive-mid:   #6b8e23;
+    --olive-bright:#8fbc3b;
+    --cream-light: #faf3e0;
+    --cream-warm:  #f5e6d3;
+    --earth-dark:  #3e2723;
+    --earth-mid:   #4a3728;
+    --white:       #ffffff;
+    --shadow:      0 4px 24px rgba(62,39,35,0.13);
+    --radius:      14px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Mulish', sans-serif; background: var(--cream-light); color: var(--earth-dark); line-height: 1.7; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,243,224,0.96); backdrop-filter: blur(10px); border-bottom: 2px solid var(--terra-light); box-shadow: 0 2px 16px rgba(62,39,35,0.10); }
+  .nav-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 68px; }
+  .nav-logo { font-family: 'Cormorant Infant', serif; font-size: 1.45rem; font-weight: 700; color: var(--terra-dark); text-decoration: none; }
+  .nav-logo span { color: var(--olive-main); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'Mulish', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--earth-mid); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.25s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 2px; background: var(--terra-main); transform: scaleX(0); transition: transform 0.25s; }
+  .nav-links a:hover { color: var(--terra-main); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--terra-main); }
+  .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-burger span { display: block; width: 26px; height: 2px; background: var(--earth-dark); margin: 6px 0; }
+
+  /* ── PAGE HERO ── */
+  .page-hero { position: relative; padding: 140px 24px 100px; background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&auto=format&fit=crop'); background-size: cover; background-position: center 60%; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(150deg, rgba(85,107,47,0.70) 0%, rgba(62,39,35,0.80) 100%); }
+  .page-hero-arch { position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 120%; height: 80px; background: var(--cream-light); border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+  .page-hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; text-align: center; color: var(--white); animation: fadeUp 0.9s ease both; }
+  .breadcrumb { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 16px; }
+  .breadcrumb a { color: inherit; text-decoration: none; }
+  .page-hero h1 { font-family: 'Cormorant Infant', serif; font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 700; line-height: 1.15; }
+  .page-hero p { margin-top: 14px; font-size: 1.05rem; opacity: 0.88; max-width: 560px; margin-left: auto; margin-right: auto; }
+
+  /* ── SECTION ── */
+  section { padding: 80px 24px; }
+  .section-inner { max-width: 1160px; margin: 0 auto; }
+  .section-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra-main); margin-bottom: 10px; }
+  .section-title { font-family: 'Cormorant Infant', serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 700; color: var(--earth-dark); line-height: 1.2; margin-bottom: 16px; }
+
+  /* ── CONTACT LAYOUT ── */
+  .contact-section { background: var(--cream-light); }
+  .contact-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; }
+
+  /* ── FORM ── */
+  .form-card { background: var(--white); border-radius: var(--radius); padding: 40px 36px; box-shadow: var(--shadow); animation: fadeUp 0.85s ease both; }
+  .form-card h2 { font-family: 'Cormorant Infant', serif; font-size: 1.8rem; font-weight: 700; color: var(--earth-dark); margin-bottom: 6px; }
+  .form-card .form-sub { font-size: 0.92rem; color: #6b584a; margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--earth-mid); margin-bottom: 7px; }
+  .form-group label span.req { color: var(--terra-main); }
+  .form-control {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid rgba(62,39,35,0.15);
+    border-radius: 10px; outline: none;
+    font-family: 'Mulish', sans-serif; font-size: 0.95rem;
+    color: var(--earth-dark); background: var(--cream-light);
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.2s;
+    appearance: none; -webkit-appearance: none;
+  }
+  .form-control:focus { border-color: var(--terra-main); box-shadow: 0 0 0 3px rgba(194,112,62,0.15); background: var(--white); }
+  .form-control::placeholder { color: #b0987e; font-weight: 400; }
+  select.form-control { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%23c2703e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
+  textarea.form-control { resize: vertical; min-height: 110px; }
+  .form-privacy { font-size: 0.8rem; color: #8a7060; margin-bottom: 20px; }
+  .form-privacy a { color: var(--terra-main); }
+
+  /* Submit button */
+  .btn-submit {
+    width: 100%; padding: 16px 32px;
+    background: linear-gradient(90deg, var(--terra-dark), var(--terra-light));
+    color: var(--white); border: none; border-radius: 50px;
+    font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(184,92,56,0.30);
+    position: relative; overflow: hidden;
+  }
+  .btn-submit::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, var(--terra-light), var(--terra-dark));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(184,92,56,0.40); }
+  .btn-submit:hover::before { opacity: 1; }
+  .btn-submit span { position: relative; z-index: 1; }
+
+  /* Success state */
+  .form-success {
+    display: none; text-align: center; padding: 40px 24px;
+  }
+  .form-success .success-icon {
+    font-size: 3.5rem; margin-bottom: 16px;
+  }
+  .form-success h3 { font-family: 'Cormorant Infant', serif; font-size: 1.8rem; font-weight: 700; color: var(--earth-dark); margin-bottom: 10px; }
+  .form-success p { font-size: 0.95rem; color: #6b584a; }
+
+  /* ── INFO PANEL ── */
+  .info-panel { animation: fadeUp 0.85s 0.15s ease both; }
+  .info-section-title { font-family: 'Cormorant Infant', serif; font-size: 1.8rem; font-weight: 700; color: var(--earth-dark); margin-bottom: 6px; }
+  .info-section-sub { font-size: 0.93rem; color: #6b584a; margin-bottom: 32px; }
+
+  .info-card { background: var(--white); border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow); margin-bottom: 18px; display: flex; gap: 18px; align-items: flex-start; transition: transform 0.3s; }
+  .info-card:hover { transform: translateX(4px); }
+  .info-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+  .info-card-icon.terra { background: linear-gradient(135deg, var(--terra-light), var(--terra-dark)); }
+  .info-card-icon.olive { background: linear-gradient(135deg, var(--olive-mid), var(--olive-main)); }
+  .info-card-content h4 { font-family: 'Cormorant Infant', serif; font-size: 1.05rem; font-weight: 700; color: var(--earth-dark); margin-bottom: 4px; }
+  .info-card-content p { font-size: 0.88rem; color: #6b584a; line-height: 1.6; }
+  .info-card-content a { color: var(--terra-main); text-decoration: none; font-weight: 600; }
+  .info-card-content a:hover { text-decoration: underline; }
+
+  /* Hours table */
+  .hours-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  .hours-table tr td { padding: 5px 0; font-size: 0.88rem; color: #6b584a; }
+  .hours-table tr td:first-child { font-weight: 600; color: var(--earth-mid); padding-right: 16px; }
+  .hours-table tr.today td { color: var(--terra-main); font-weight: 700; }
+  .open-badge { display: inline-block; background: rgba(143,188,59,0.15); color: var(--olive-main); border-radius: 20px; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; margin-left: 8px; }
+
+  /* ── MAP PLACEHOLDER ── */
+  .map-section { background: var(--cream-warm); padding: 0; }
+  .map-placeholder {
+    height: 360px;
+    background: linear-gradient(135deg, #e8d5b7 0%, #d4c4a0 50%, #c8b88a 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(62,39,35,0.04) 40px, rgba(62,39,35,0.04) 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(62,39,35,0.04) 40px, rgba(62,39,35,0.04) 41px);
+  }
+  .map-pin { font-size: 3.5rem; position: relative; z-index: 1; animation: bounce 2s ease-in-out infinite; }
+  .map-address { position: relative; z-index: 1; text-align: center; }
+  .map-address strong { font-family: 'Cormorant Infant', serif; font-size: 1.4rem; font-weight: 700; color: var(--earth-dark); display: block; }
+  .map-address span { font-size: 0.88rem; color: #6b584a; }
+  .map-link { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; background: var(--terra-main); color: var(--white); text-decoration: none; padding: 12px 28px; border-radius: 50px; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.25s; }
+  .map-link:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,92,56,0.35); }
+
+  /* ── QUICK CONTACT BAND ── */
+  .quick-band { background: var(--earth-dark); padding: 56px 24px; }
+  .quick-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .quick-item { text-align: center; }
+  .quick-icon { font-size: 2rem; margin-bottom: 12px; }
+  .quick-item h4 { font-family: 'Cormorant Infant', serif; font-size: 1.1rem; font-weight: 700; color: var(--cream-light); margin-bottom: 6px; }
+  .quick-item p { font-size: 0.88rem; color: rgba(250,243,224,0.70); }
+  .quick-item a { color: var(--terra-light); text-decoration: none; font-weight: 600; }
+  .quick-item a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--earth-dark); color: rgba(250,243,224,0.8); padding: 60px 24px 32px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand h3 { font-family: 'Cormorant Infant', serif; font-size: 1.5rem; font-weight: 700; color: var(--cream-light); margin-bottom: 12px; }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.7; }
+  .footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra-light); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 8px; }
+  .footer-col ul li a { color: rgba(250,243,224,0.75); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--terra-light); }
+  .footer-info p { font-size: 0.88rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+  .footer-info p span:first-child { color: var(--terra-light); flex-shrink: 0; }
+  .footer-bottom { max-width: 1160px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom a { color: var(--terra-light); text-decoration: none; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .animate { animation: fadeUp 0.75s ease both; }
+  .delay-1 { animation-delay: 0.12s; }
+  .delay-2 { animation-delay: 0.24s; }
+  .delay-3 { animation-delay: 0.36s; }
+
+  @media (max-width: 900px) { .contact-layout { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .quick-inner { grid-template-columns: 1fr; gap: 24px; } }
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; background: var(--cream-light); border-bottom: 2px solid var(--terra-light); padding: 16px 0; }
+    .nav-links.open { display: flex; }
+    .nav-links li a { display: block; padding: 12px 24px; }
+    .nav-burger { display: block; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .form-card { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Кантора <span>Тера</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нотариуса</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="faq.html">Въпроси</a></li>
+      <li><a href="contact.html" class="active">Контакти</a></li>
+    </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Начало</a> / Контакти</div>
+    <h1>Свържете се с нас</h1>
+    <p>Запазете консултация или ни изпратете вашия въпрос. Отговаряме в рамките на един работен ден.</p>
+  </div>
+  <div class="page-hero-arch"></div>
+</div>
+
+<!-- CONTACT MAIN -->
+<section class="contact-section">
+  <div class="section-inner">
+    <div class="contact-layout">
+
+      <!-- FORM -->
+      <div class="form-card">
+        <h2>Запази консултация</h2>
+        <p class="form-sub">Попълнете формата и ще се свържем с вас за потвърждение.</p>
+
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Имена <span class="req">*</span></label>
+              <input type="text" id="fname" name="fname" class="form-control" placeholder="Иван Иванов" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон <span class="req">*</span></label>
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="088 888 8888" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Имейл адрес <span class="req">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="ivanov@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="service">Тип услуга <span class="req">*</span></label>
+            <select id="service" name="service" class="form-control" required>
+              <option value="" disabled selected>Изберете вид на услугата</option>
+              <option value="zaverk">Нотариална заверка</option>
+              <option value="palnomoshno">Пълномощно</option>
+              <option value="udostoverenie">Удостоверение</option>
+              <option value="prepis">Препис</option>
+              <option value="dogovor">Договор</option>
+              <option value="imot">Имотна сделка</option>
+              <option value="nasledstvo">Наследство</option>
+              <option value="drugo">Друго</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pref-date">Предпочитана дата</label>
+              <input type="date" id="pref-date" name="pref_date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="pref-time">Предпочитан час</label>
+              <select id="pref-time" name="pref_time" class="form-control">
+                <option value="" disabled selected>Изберете час</option>
+                <option>09:00 – 10:00</option>
+                <option>10:00 – 11:00</option>
+                <option>11:00 – 12:00</option>
+                <option>13:00 – 14:00</option>
+                <option>14:00 – 15:00</option>
+                <option>15:00 – 16:00</option>
+                <option>16:00 – 17:00</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Описание на вашия случай</label>
+            <textarea id="description" name="description" class="form-control" placeholder="Моля, опишете накратко какво ви е нужно, за да се подготвим предварително..."></textarea>
+          </div>
+
+          <p class="form-privacy">С изпращането на формата се съгласявате с нашата <a href="#">Политика за поверителност</a>. Данните ви се използват единствено за обработка на вашата заявка.</p>
+
+          <button type="submit" class="btn-submit">
+            <span>Изпрати заявката</span>
+          </button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">✅</div>
+          <h3>Заявката е изпратена!</h3>
+          <p>Благодарим ви! Ще се свържем с вас в рамките на един работен ден за потвърждение на консултацията.</p>
+        </div>
+      </div>
+
+      <!-- INFO PANEL -->
+      <div class="info-panel">
+        <h2 class="info-section-title">Информация за контакт</h2>
+        <p class="info-section-sub">Можете да се свържете с нас по удобния за вас начин.</p>
+
+        <div class="info-card animate">
+          <div class="info-card-icon terra">📍</div>
+          <div class="info-card-content">
+            <h4>Адрес</h4>
+            <p>ул. „Цар Симеон Велики" 92<br>Стара Загора 6000, България</p>
+          </div>
+        </div>
+
+        <div class="info-card animate delay-1">
+          <div class="info-card-icon olive">📞</div>
+          <div class="info-card-content">
+            <h4>Телефон</h4>
+            <p><a href="tel:042600123">042 600 123</a><br><a href="tel:0888123456">0888 123 456</a> (мобилен)</p>
+          </div>
+        </div>
+
+        <div class="info-card animate delay-2">
+          <div class="info-card-icon terra">✉️</div>
+          <div class="info-card-content">
+            <h4>Имейл</h4>
+            <p><a href="mailto:office@kantora-tera.bg">office@kantora-tera.bg</a></p>
+          </div>
+        </div>
+
+        <div class="info-card animate delay-3">
+          <div class="info-card-icon olive">🕐</div>
+          <div class="info-card-content">
+            <h4>Работно Време</h4>
+            <table class="hours-table">
+              <tr><td>Понеделник</td><td>09:00 – 17:30</td></tr>
+              <tr><td>Вторник</td><td>09:00 – 17:30</td></tr>
+              <tr><td>Сряда</td><td>09:00 – 17:30</td></tr>
+              <tr><td>Четвъртък</td><td>09:00 – 17:30</td></tr>
+              <tr><td>Петък</td><td>09:00 – 17:00</td></tr>
+              <tr><td>Събота</td><td>10:00 – 13:00</td></tr>
+              <tr><td>Неделя</td><td>Почивен ден</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Arch-decorated note card -->
+        <div style="background:linear-gradient(135deg,var(--terra-dark),var(--terra-main));border-radius:var(--radius);padding:24px 22px;margin-top:8px;position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-20px;top:-20px;width:100px;height:100px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
+          <p style="font-size:0.9rem;color:rgba(255,255,255,0.9);position:relative;z-index:1;line-height:1.65;">
+            <strong style="color:#fff;display:block;font-family:'Cormorant Infant',serif;font-size:1.1rem;margin-bottom:6px;">Важно!</strong>
+            За имотни сделки е необходима предварителна уговорка. Моля, свържете се с нас поне 3 работни дни предварително, за да подготвим документацията.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MAP PLACEHOLDER -->
+<div class="map-section">
+  <div class="map-placeholder">
+    <div class="map-pin">📍</div>
+    <div class="map-address">
+      <strong>Нотариална Кантора Тера</strong>
+      <span>ул. „Цар Симеон Велики" 92, Стара Загора</span>
+    </div>
+    <a href="https://maps.google.com/?q=Стара+Загора" target="_blank" rel="noopener" class="map-link">
+      <span>Отвори в Google Maps</span>
+    </a>
+  </div>
+</div>
+
+<!-- QUICK CONTACT BAND -->
+<div class="quick-band">
+  <div class="quick-inner">
+    <div class="quick-item animate">
+      <div class="quick-icon">📞</div>
+      <h4>Обадете ни се</h4>
+      <p><a href="tel:042600123">042 600 123</a><br><span style="color:rgba(250,243,224,0.55);font-size:0.82rem">Пон – Пет, 09:00 – 17:30</span></p>
+    </div>
+    <div class="quick-item animate delay-1">
+      <div class="quick-icon">✉️</div>
+      <h4>Пишете ни</h4>
+      <p><a href="mailto:office@kantora-tera.bg">office@kantora-tera.bg</a><br><span style="color:rgba(250,243,224,0.55);font-size:0.82rem">Отговаряме до 24 часа</span></p>
+    </div>
+    <div class="quick-item animate delay-2">
+      <div class="quick-icon">🕐</div>
+      <h4>Работно Време</h4>
+      <p><span style="color:rgba(250,243,224,0.85)">Пон – Пет: 09:00 – 17:30</span><br><span style="color:rgba(250,243,224,0.55);font-size:0.82rem">Събота: 10:00 – 13:00</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Нотариална Кантора Тера</h3>
+      <p>Вашият надежден нотариус в Стара Загора. Предоставяме пълен спектър от нотариални услуги с над 18 години опит, топлота и професионализъм.</p>
+      <div class="footer-info" style="margin-top:20px">
+        <p><span>📍</span><span>ул. „Цар Симеон Велики" 92, Стара Загора 6000</span></p>
+        <p><span>📞</span><span>042 600 123</span></p>
+        <p><span>✉️</span><span>office@kantora-tera.bg</span></p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Работно Време</h4>
+      <ul>
+        <li><a href="#">Пон – Пет: 09:00 – 17:30</a></li>
+        <li><a href="#">Събота: 10:00 – 13:00</a></li>
+        <li><a href="#">Неделя: Почивен ден</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Нотариална Кантора Тера. Всички права запазени.</span>
+    <span>Рег. № 247 при Нотариалната Камара на България · <a href="#">Поверителност</a></span>
+  </div>
+</footer>
+
+<script>
+  // Nav burger
+  const burger = document.getElementById('navBurger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // Form submission
+  const form = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Basic validation
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(field => {
+      if (!field.value.trim()) {
+        field.style.borderColor = '#e05252';
+        valid = false;
+        field.addEventListener('input', () => { field.style.borderColor = ''; }, { once: true });
+      }
+    });
+    if (!valid) return;
+    // Show success
+    form.style.display = 'none';
+    formSuccess.style.display = 'block';
+  });
+
+  // Set min date for date picker to today
+  const dateInput = document.getElementById('pref-date');
+  if (dateInput) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.animate').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

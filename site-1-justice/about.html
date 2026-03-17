@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>За нотариуса – Нотариална Кантора Правосъдие</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --emerald-deep: #065f46;
+      --emerald-mid:  #047857;
+      --emerald-light:#059669;
+      --silver:       #c0c0c0;
+      --silver-light: #e5e7eb;
+      --dark-bg:      #1b1b2f;
+      --dark-card:    #12122a;
+      --white:        #ffffff;
+      --text-muted:   #9ca3af;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      background: var(--dark-bg);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(27, 27, 47, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(192, 192, 192, 0.15);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-brand .motif { font-size: 1.6rem; color: var(--emerald-light); }
+    .nav-brand span {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+      color: var(--white); letter-spacing: 0.04em; line-height: 1.2;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--silver); text-decoration: none; transition: color 0.25s;
+      position: relative; padding-bottom: 4px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--emerald-light); transform: scaleX(0); transform-origin: center; transition: transform 0.25s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--white); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--silver); border-radius: 2px; transition: all 0.3s; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding-top: 72px;
+      min-height: 340px;
+      position: relative;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80');
+      background-size: cover; background-position: center top;
+      filter: brightness(0.22);
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(27,27,47,0.95) 100%);
+    }
+    .page-hero-content {
+      position: relative; z-index: 2;
+      padding: 3rem 2rem;
+      max-width: 1140px; margin: 0 auto; width: 100%;
+    }
+    .breadcrumb {
+      font-size: 0.78rem; color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+    }
+    .breadcrumb a { color: var(--emerald-light); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 900; color: var(--white);
+      letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .page-title .motif { color: var(--emerald-light); }
+
+    /* ── SECTIONS ── */
+    section { padding: 5.5rem 2rem; }
+    .container { max-width: 1140px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--emerald-light);
+      display: block; margin-bottom: 0.7rem;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700;
+      color: var(--white); line-height: 1.2; margin-bottom: 1rem;
+    }
+    .divider { width: 56px; height: 3px; background: linear-gradient(90deg, var(--emerald-mid), var(--emerald-light)); margin: 1rem 0 1.8rem; border-radius: 2px; }
+
+    /* ── BIO ── */
+    .bio-section { background: #111125; }
+    .bio-inner {
+      display: grid; grid-template-columns: 360px 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .bio-photo-col { position: sticky; top: 96px; }
+    .bio-photo-frame {
+      position: relative;
+      border-radius: 6px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .bio-photo-frame::before {
+      content: '';
+      position: absolute; inset: 0;
+      border: 3px solid var(--emerald-mid);
+      border-radius: 6px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .bio-photo {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9) saturate(0.85);
+    }
+    .bio-name-card {
+      background: var(--emerald-deep);
+      padding: 1.4rem 1.6rem;
+      text-align: center;
+    }
+    .bio-name-card strong {
+      display: block;
+      font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.3rem;
+    }
+    .bio-name-card span { font-size: 0.82rem; color: rgba(255,255,255,0.75); letter-spacing: 0.06em; }
+
+    .bio-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .bio-tag {
+      background: rgba(5,150,105,0.15);
+      border: 1px solid rgba(5,150,105,0.35);
+      color: var(--emerald-light);
+      font-size: 0.75rem; letter-spacing: 0.06em;
+      padding: 0.3rem 0.8rem; border-radius: 20px;
+    }
+
+    .bio-text p {
+      font-size: 0.97rem; color: var(--silver-light);
+      line-height: 1.9; margin-bottom: 1.3rem;
+    }
+    .bio-quote {
+      border-left: 3px solid var(--emerald-mid);
+      padding: 1rem 1.4rem;
+      background: rgba(6,95,70,0.12);
+      border-radius: 0 6px 6px 0;
+      margin: 1.8rem 0;
+    }
+    .bio-quote p { font-style: italic; color: var(--silver); font-size: 1.05rem; line-height: 1.7; margin: 0; }
+    .bio-quote cite { display: block; margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted); font-style: normal; }
+
+    /* ── TIMELINE ── */
+    .timeline-section { background: var(--dark-bg); }
+    .timeline { position: relative; padding-left: 2.5rem; max-width: 760px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+      background: linear-gradient(180deg, var(--emerald-mid), transparent);
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 2.8rem;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-dot {
+      position: absolute; left: -2.9rem; top: 0.25rem;
+      width: 16px; height: 16px;
+      background: var(--emerald-mid);
+      border: 3px solid var(--dark-bg);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--emerald-mid);
+    }
+    .timeline-year {
+      font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700;
+      color: var(--emerald-light); letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.3rem;
+    }
+    .timeline-title {
+      font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.4rem;
+    }
+    .timeline-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── VALUES ── */
+    .values-section { background: #111125; }
+    .values-header { text-align: center; margin-bottom: 3rem; }
+    .values-header .divider { margin: 1rem auto 0; }
+    .values-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.6rem;
+    }
+    .value-card {
+      background: var(--dark-card);
+      border: 1px solid rgba(192,192,192,0.1);
+      border-top: 3px solid var(--emerald-mid);
+      border-radius: 4px;
+      padding: 2rem 1.6rem;
+      text-align: center;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s;
+    }
+    .value-card.visible { opacity: 1; transform: translateY(0); }
+    .value-card:hover { box-shadow: 0 8px 28px rgba(5,150,105,0.15); }
+    .value-icon { font-size: 2rem; display: block; margin-bottom: 1rem; }
+    .value-title {
+      font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.7rem;
+    }
+    .value-desc { font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── MEMBERSHIPS ── */
+    .memberships-section { background: var(--dark-bg); }
+    .memberships-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.4rem; margin-top: 2rem; }
+    .member-card {
+      background: var(--dark-card);
+      border: 1px solid rgba(192,192,192,0.1);
+      border-radius: 6px; padding: 1.8rem 1.4rem;
+      display: flex; align-items: center; gap: 1rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .member-card.visible { opacity: 1; transform: translateY(0); }
+    .member-card:hover { border-color: rgba(5,150,105,0.4); }
+    .member-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .member-info strong {
+      display: block; font-family: 'Cinzel', serif;
+      font-size: 0.82rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem;
+    }
+    .member-info span { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark-card);
+      border-top: 1px solid rgba(192,192,192,0.1);
+      padding: 3.5rem 2rem 1.5rem;
+    }
+    .footer-grid {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr;
+      gap: 2.5rem; margin-bottom: 2.5rem;
+    }
+    .footer-brand .motif { font-size: 2rem; color: var(--emerald-light); display: block; margin-bottom: 0.6rem; }
+    .footer-brand-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.8rem; display: block; }
+    .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+    .footer-col h4 { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--silver); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a { font-size: 0.88rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--emerald-light); }
+    .footer-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 0.3rem; }
+    .footer-info strong { color: var(--silver); }
+    .footer-hours-row { display: flex; justify-content: space-between; font-size: 0.83rem; }
+    .footer-hours-row span:first-child { color: var(--text-muted); }
+    .footer-hours-row span:last-child { color: var(--silver-light); }
+    .footer-bottom { max-width: 1140px; margin: 0 auto; border-top: 1px solid rgba(192,192,192,0.08); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-bottom .motif-small { color: var(--emerald-light); font-size: 0.9rem; }
+
+    /* ── ANIMATIONS ── */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .slide-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .slide-left.visible { opacity: 1; transform: translateX(0); }
+    .slide-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .slide-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .bio-inner { grid-template-columns: 1fr; }
+      .bio-photo-col { position: static; max-width: 320px; margin: 0 auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; background: rgba(27,27,47,0.98); padding: 1.5rem 2rem; gap: 1.2rem; border-bottom: 1px solid rgba(192,192,192,0.1); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+      section { padding: 4rem 1.2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <span class="motif">⚖</span>
+    <span>Нотариална Кантора<br>Правосъдие</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="about.html" class="active">За нотариуса</a></li>
+    <li><a href="services.html">Услуги</a></li>
+    <li><a href="faq.html">Въпроси</a></li>
+    <li><a href="contact.html">Контакти</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="breadcrumb"><a href="index.html">Начало</a> &rsaquo; За нотариуса</p>
+    <h1 class="page-title"><span class="motif">⚖</span> За нотариуса</h1>
+  </div>
+</div>
+
+<!-- BIO -->
+<section class="bio-section">
+  <div class="container">
+    <div class="bio-inner">
+      <div class="bio-photo-col slide-left">
+        <div class="bio-photo-frame">
+          <img
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80"
+            alt="Нотариус Елена Стоянова"
+            class="bio-photo"
+          />
+          <div class="bio-name-card">
+            <strong>Елена Стоянова</strong>
+            <span>Нотариус · Район СГС</span>
+          </div>
+        </div>
+        <div class="bio-tags">
+          <span class="bio-tag">Имотно право</span>
+          <span class="bio-tag">Наследства</span>
+          <span class="bio-tag">Договорно право</span>
+          <span class="bio-tag">Удостоверения</span>
+          <span class="bio-tag">Пълномощни</span>
+        </div>
+      </div>
+
+      <div class="bio-text slide-right">
+        <span class="section-label">Биография</span>
+        <h2 class="section-title">Нотариус<br>Елена Стоянова</h2>
+        <div class="divider"></div>
+
+        <p>Нотариус Елена Стоянова е родена в София и завършва право в Юридическия факултет на Софийския университет „Св. Климент Охридски" с отличен успех. Вписана е в Нотариалната камара на Република България под № 412, с район на действие Софийски градски съд.</p>
+
+        <p>С над 20 години практика в областта на нотариалното право, тя е утвърден специалист, известен с прецизността, задълбочената правна подготовка и изключително внимателния подход към всеки клиент. Специализирала е нотариално и вещно право в Хайделберг, Германия и Виена, Австрия.</p>
+
+        <div class="bio-quote">
+          <p>„Нотариусът е стражът на правната сигурност. Моята мисия е да гарантирам, че всяка сделка, всеки документ и всяка заверка носят пълна законова защита за хората, на които служа."</p>
+          <cite>– Нотариус Елена Стоянова</cite>
+        </div>
+
+        <p>Освен активната нотариална дейност, Елена Стоянова участва редовно в семинари и конференции по нотариално право. Тя е лектор в обучения за млади юристи и автор на публикации в специализирани правни издания.</p>
+
+        <p>Кантората работи изцяло по принципа на индивидуалния подход – всеки клиент получава пълно внимание, изчерпателна информация и персонализирано решение за своята правна ситуация.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="container">
+    <span class="section-label fade-in">Кариерен път</span>
+    <h2 class="section-title fade-in">Ключови моменти</h2>
+    <div class="divider fade-in"></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2003</div>
+        <div class="timeline-title">Вписване в Нотариалната камара</div>
+        <p class="timeline-desc">Успешно полагане на нотариалния изпит и вписване като нотариус с район СГС. Начало на самостоятелната кантора в центъра на София.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2006</div>
+        <div class="timeline-title">Специализация в Германия</div>
+        <p class="timeline-desc">Едногодишна специализация по нотариално и вещно право в Хайделбергския университет. Задълбочено изучаване на европейски практики.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2010</div>
+        <div class="timeline-title">Разширяване на кантората</div>
+        <p class="timeline-desc">Преместване в нови, по-просторни офис пространства на бул. „Витоша". Разширяване на екипа с двама правни консултанти.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2015</div>
+        <div class="timeline-title">Признание и награди</div>
+        <p class="timeline-desc">Отличие „Нотариус на годината" от Нотариалната камара на Република България за принос в развитието на нотариалната практика.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2020</div>
+        <div class="timeline-title">Дигитализация на услугите</div>
+        <p class="timeline-desc">Въвеждане на електронна система за записване на часове и дигитален архив на документи. Услуги за дистанционна консултация.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026</div>
+        <div class="timeline-title">Над 8500 доволни клиенти</div>
+        <p class="timeline-desc">Продължаване на мисията с непрекъснато усъвършенстване на услугите и поддържане на най-висок стандарт на правна защита.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="container">
+    <div class="values-header fade-in">
+      <span class="section-label">Нашите принципи</span>
+      <h2 class="section-title">Ценности и принципи</h2>
+      <p style="color:var(--text-muted); font-size:0.97rem; max-width:580px; margin:0 auto; line-height:1.8;">Принципите, върху които е изградена нашата кантора, са в основата на всяко действие и всяко решение.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <span class="value-icon">⚖</span>
+        <h3 class="value-title">Безпристрастност</h3>
+        <p class="value-desc">Нотариусът служи еднакво и безпристрастно на всички страни по сделката. Справедливостта е нашата най-висока ценност.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">🛡️</span>
+        <h3 class="value-title">Правна сигурност</h3>
+        <p class="value-desc">Всеки документ, изготвен в кантората, носи пълна правна сила и защита. Точността и законосъобразността са без компромис.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">🤝</span>
+        <h3 class="value-title">Доверие</h3>
+        <p class="value-desc">Изграждаме дългосрочни отношения с клиентите, основани на взаимно уважение, откритост и пълна прозрачност.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">📚</span>
+        <h3 class="value-title">Непрекъснато обучение</h3>
+        <p class="value-desc">Правото се развива. Непрекъснато следим промените в законодателството, за да предоставяме актуални и точни услуги.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIPS -->
+<section class="memberships-section">
+  <div class="container">
+    <span class="section-label fade-in">Членство</span>
+    <h2 class="section-title fade-in">Професионални организации</h2>
+    <div class="divider fade-in"></div>
+    <div class="memberships-grid">
+      <div class="member-card">
+        <span class="member-icon">🏛️</span>
+        <div class="member-info">
+          <strong>Нотариална камара на РБ</strong>
+          <span>Член от 2003 г. · № 412</span>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-icon">🌍</span>
+        <div class="member-info">
+          <strong>Международен нотариален съюз</strong>
+          <span>Член от 2008 г.</span>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-icon">🇪🇺</span>
+        <div class="member-info">
+          <strong>Нотариати на ЕС (CNUE)</strong>
+          <span>Асоцииран член от 2010 г.</span>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-icon">⚖</span>
+        <div class="member-info">
+          <strong>Съюз на юристите в България</strong>
+          <span>Член от 2001 г.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="motif">⚖</span>
+      <span class="footer-brand-name">Нотариална Кантора Правосъдие</span>
+      <p>Нотариус Елена Стоянова – вписана в Нотариалната камара на Република България. Предоставяме пълен спектър от нотариални услуги в София.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <ul>
+        <li><a href="services.html">Нотариални заверки</a></li>
+        <li><a href="services.html">Пълномощни</a></li>
+        <li><a href="services.html">Удостоверения</a></li>
+        <li><a href="services.html">Договори</a></li>
+        <li><a href="services.html">Имотни сделки</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-info">
+      <h4>Контакти</h4>
+      <p><strong>Адрес:</strong><br>бул. „Витоша" 45, ет. 3<br>1000 София, България</p>
+      <p><strong>Телефон:</strong><br>+359 2 987 6543</p>
+      <p><strong>Имейл:</strong><br>office@kantora-pravosudie.bg</p>
+      <div style="margin-top:0.8rem;">
+        <div class="footer-hours-row"><span>Пон – Пет</span><span>09:00 – 17:30</span></div>
+        <div class="footer-hours-row"><span>Събота</span><span>10:00 – 13:00</span></div>
+        <div class="footer-hours-row"><span>Неделя</span><span>Почивен ден</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Нотариална Кантора Правосъдие. Всички права запазени.</p>
+    <p class="motif-small">⚖ Правна сигурност за всяка стъпка</p>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in, .slide-left, .slide-right, .timeline-item, .value-card, .member-card').forEach((el, i) => {
+    if (el.classList.contains('value-card') || el.classList.contains('member-card')) {
+      el.style.transitionDelay = `${(i % 4) * 0.1}s`;
+    }
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

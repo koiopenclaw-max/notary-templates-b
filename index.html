@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нотариални Шаблони — Комплект Б (Смели)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed; top: -30%; left: -10%; width: 60%; height: 60%;
+            background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+        .bg-glow-2 {
+            position: fixed; bottom: -20%; right: -10%; width: 50%; height: 50%;
+            background: radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+
+        header {
+            position: relative; z-index: 10;
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+        header .badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border: 1px solid rgba(139,92,246,0.4);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a78bfa;
+            margin-bottom: 24px;
+            backdrop-filter: blur(8px);
+            background: rgba(139,92,246,0.08);
+        }
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .gallery {
+            position: relative; z-index: 10;
+            max-width: 1200px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: cardIn 0.6s ease forwards;
+        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(139,92,246,0.3);
+            box-shadow: 0 20px 60px rgba(139,92,246,0.1), 0 0 40px rgba(139,92,246,0.05);
+        }
+
+        .card-preview {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-preview .swatch {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+        }
+
+        .s1 { background: linear-gradient(135deg, #065f46, #047857, #10b981); }
+        .s2 { background: linear-gradient(135deg, #704214, #8B6914, #f4e4c1); }
+        .s3 { background: linear-gradient(135deg, #7c3aed, #a855f7, #e9d5ff); }
+        .s4 { background: linear-gradient(135deg, #000000, #333333, #ffffff); }
+        .s5 { background: linear-gradient(135deg, #b85c38, #c2703e, #556b2f); }
+
+        .card-preview .overlay-text {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 16px 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+        .card-body h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f0f0f0;
+        }
+        .card-body p {
+            font-size: 0.9rem;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .card-body .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .card-body .tag {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+        }
+        .card-body .tag.font { color: #a78bfa; border-color: rgba(167,139,250,0.3); }
+        .card-body .tag.style { color: #f472b6; border-color: rgba(244,114,182,0.3); }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(236,72,153,0.2));
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 12px;
+            color: #c4b5fd;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .card-link:hover {
+            background: linear-gradient(135deg, rgba(139,92,246,0.4), rgba(236,72,153,0.4));
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .card-link svg { width: 16px; height: 16px; }
+
+        .stats {
+            position: relative; z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .stat-item .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        footer {
+            position: relative; z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            color: #555;
+            font-size: 0.85rem;
+        }
+        footer span { color: #a78bfa; }
+
+        @media (max-width: 768px) {
+            .gallery { grid-template-columns: 1fr; gap: 24px; }
+            header { padding: 60px 16px 30px; }
+            .stats { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <header>
+        <div class="badge">Комплект Б — Смели</div>
+        <h1>Нотариални Шаблони</h1>
+        <p>Пет уникални уебсайт шаблона за нотариални кантори в България — всеки с различен визуален стил, пълна функционалност и адаптивен дизайн.</p>
+    </header>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="num">5</div>
+            <div class="label">Уникални сайта</div>
+        </div>
+        <div class="stat-item">
+            <div class="num">25</div>
+            <div class="label">HTML страници</div>
+        </div>
+        <div class="stat-item">
+            <div class="num">100%</div>
+            <div class="label">Адаптивен дизайн</div>
+        </div>
+    </div>
+
+    <div class="gallery">
+        <div class="card">
+            <div class="card-preview">
+                <div class="swatch s1">⚖</div>
+                <div class="overlay-text">Нотариална Кантора Правосъдие</div>
+            </div>
+            <div class="card-body">
+                <h3>1. Justice — Изумрудено правосъдие</h3>
+                <p>Дълбок изумруд и сребро, везни на правосъдието, класическа елегантност с модерен нюанс.</p>
+                <div class="tags">
+                    <span class="tag font">Cinzel</span>
+                    <span class="tag font">Libre Baskerville</span>
+                    <span class="tag style">Изумруд + Сребро</span>
+                </div>
+                <a href="site-1-justice/index.html" class="card-link">
+                    Разгледай <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-preview">
+                <div class="swatch s2">📜</div>
+                <div class="overlay-text">Нотариус Перо и Печат</div>
+            </div>
+            <div class="card-body">
+                <h3>2. Paper — Пергамент и мастило</h3>
+                <p>Текстура на пергамент, сепия тонове и тъмно мастило — автентичен стил на стар документ.</p>
+                <div class="tags">
+                    <span class="tag font">IM Fell English</span>
+                    <span class="tag font">Crimson Text</span>
+                    <span class="tag style">Сепия + Пергамент</span>
+                </div>
+                <a href="site-2-paper/index.html" class="card-link">
+                    Разгледай <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-preview">
+                <div class="swatch s3">💎</div>
+                <div class="overlay-text">Нотариална Кантора Кристал</div>
+            </div>
+            <div class="card-body">
+                <h3>3. Glass — Стъклен морфизъм</h3>
+                <p>Замръзени стъклени панели, леко лилаво, модерен glassmorphism дизайн.</p>
+                <div class="tags">
+                    <span class="tag font">Outfit</span>
+                    <span class="tag font">DM Sans</span>
+                    <span class="tag style">Лилаво + Стъкло</span>
+                </div>
+                <a href="site-3-glass/index.html" class="card-link">
+                    Разгледай <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-preview">
+                <div class="swatch s4" style="color:#fff; text-shadow: 0 0 20px rgba(255,255,255,0.5);">▮</div>
+                <div class="overlay-text">НОТАРИУС МОНО</div>
+            </div>
+            <div class="card-body">
+                <h3>4. Mono — Черно и бяло</h3>
+                <p>Чисто черно и бяло, силна редакционна типография, минималистичен и дръзък стил.</p>
+                <div class="tags">
+                    <span class="tag font">Space Mono</span>
+                    <span class="tag font">Syne</span>
+                    <span class="tag style">Монохромен</span>
+                </div>
+                <a href="site-4-mono/index.html" class="card-link">
+                    Разгледай <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-preview">
+                <div class="swatch s5">🏛</div>
+                <div class="overlay-text">Нотариална Кантора Тера</div>
+            </div>
+            <div class="card-body">
+                <h3>5. Terra — Средиземноморска топлина</h3>
+                <p>Теракота и маслиненозелено, средиземноморска топлина, органични форми и арки.</p>
+                <div class="tags">
+                    <span class="tag font">Cormorant Infant</span>
+                    <span class="tag font">Mulish</span>
+                    <span class="tag style">Теракота + Маслина</span>
+                </div>
+                <a href="site-5-terra/index.html" class="card-link">
+                    Разгледай <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Нотариални Шаблони — Комплект Б <span>Смели</span> &copy; 2026. Всички права запазени.</p>
+    </footer>
+</body>
+</html>

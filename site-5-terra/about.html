@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>За Нотариуса – Нотариална Кантора Тера</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terra-main:  #c2703e;
+    --terra-light: #d4845a;
+    --terra-dark:  #b85c38;
+    --olive-main:  #556b2f;
+    --olive-mid:   #6b8e23;
+    --olive-bright:#8fbc3b;
+    --cream-light: #faf3e0;
+    --cream-warm:  #f5e6d3;
+    --earth-dark:  #3e2723;
+    --earth-mid:   #4a3728;
+    --white:       #ffffff;
+    --shadow:      0 4px 24px rgba(62,39,35,0.13);
+    --radius:      14px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--cream-light);
+    color: var(--earth-dark);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,243,224,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--terra-light);
+    box-shadow: 0 2px 16px rgba(62,39,35,0.10);
+  }
+  .nav-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 68px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 1.45rem; font-weight: 700;
+    color: var(--terra-dark); text-decoration: none;
+  }
+  .nav-logo span { color: var(--olive-main); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--earth-mid); text-decoration: none;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.25s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 2px; background: var(--terra-main);
+    transform: scaleX(0); transition: transform 0.25s;
+  }
+  .nav-links a:hover { color: var(--terra-main); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--terra-main); }
+  .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-burger span { display: block; width: 26px; height: 2px; background: var(--earth-dark); margin: 6px 0; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    position: relative; padding: 140px 24px 100px;
+    background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop');
+    background-size: cover; background-position: center 40%;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(150deg, rgba(184,92,56,0.78) 0%, rgba(62,39,35,0.80) 100%);
+  }
+  .page-hero-arch {
+    position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
+    width: 120%; height: 80px;
+    background: var(--cream-light);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .page-hero-content {
+    position: relative; z-index: 1; max-width: 800px; margin: 0 auto; text-align: center;
+    color: var(--white);
+    animation: fadeUp 0.9s ease both;
+  }
+  .breadcrumb {
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    opacity: 0.75; margin-bottom: 16px;
+  }
+  .breadcrumb a { color: inherit; text-decoration: none; }
+  .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+  .page-hero h1 {
+    font-family: 'Cormorant Infant', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700; line-height: 1.15;
+  }
+  .page-hero p {
+    margin-top: 14px; font-size: 1.05rem;
+    opacity: 0.88; max-width: 540px; margin-left: auto; margin-right: auto;
+  }
+
+  /* ── SHARED ── */
+  section { padding: 80px 24px; }
+  .section-inner { max-width: 1160px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--terra-main); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Infant', serif;
+    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+    font-weight: 700; color: var(--earth-dark);
+    line-height: 1.2; margin-bottom: 16px;
+  }
+
+  /* ── BIO SECTION ── */
+  .bio-section { background: var(--cream-light); }
+  .bio-grid {
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: 72px; align-items: center;
+  }
+
+  /* Arch-framed photo */
+  .arch-photo-wrap {
+    position: relative; display: flex; justify-content: center;
+  }
+  .arch-photo-outer {
+    position: relative; width: 300px;
+  }
+  .arch-frame {
+    width: 300px; height: 380px;
+    border-radius: 150px 150px 24px 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(62,39,35,0.25);
+    border: 6px solid var(--cream-warm);
+    position: relative; z-index: 1;
+  }
+  .arch-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+  }
+  /* decorative rings */
+  .arch-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid;
+    z-index: 0;
+  }
+  .arch-ring-1 {
+    width: 120px; height: 120px;
+    border-color: var(--terra-light);
+    bottom: -24px; left: -32px;
+    opacity: 0.45;
+  }
+  .arch-ring-2 {
+    width: 70px; height: 70px;
+    border-color: var(--olive-mid);
+    top: 20px; right: -28px;
+    opacity: 0.4;
+  }
+  .arch-accent-dot {
+    position: absolute; width: 14px; height: 14px;
+    background: var(--terra-main); border-radius: 50%;
+    top: -8px; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+  }
+  .arch-badge {
+    position: absolute; bottom: 28px; right: -16px; z-index: 2;
+    background: var(--terra-main); color: var(--white);
+    border-radius: 12px; padding: 12px 18px;
+    box-shadow: 0 8px 24px rgba(184,92,56,0.35);
+    text-align: center;
+  }
+  .arch-badge .num {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 2.2rem; font-weight: 700; line-height: 1;
+  }
+  .arch-badge .label { font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
+
+  .bio-text .section-tag { display: block; }
+  .bio-name {
+    font-family: 'Cormorant Infant', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700; color: var(--earth-dark);
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .bio-title {
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--olive-main); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .bio-body p {
+    font-size: 0.97rem; color: #5a4840;
+    margin-bottom: 16px; line-height: 1.75;
+  }
+  .bio-qualifications {
+    margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .qual-tag {
+    background: var(--cream-warm);
+    border: 1px solid var(--terra-light);
+    border-radius: 30px; padding: 6px 16px;
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--terra-dark);
+  }
+  .qual-tag.green {
+    border-color: var(--olive-mid);
+    color: var(--olive-main);
+  }
+
+  /* ── MILESTONES ── */
+  .milestones-bg { background: var(--cream-warm); }
+  .milestones-intro { max-width: 600px; margin-bottom: 56px; }
+  .timeline {
+    position: relative; padding-left: 32px;
+    max-width: 760px;
+  }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+    width: 2px; background: linear-gradient(to bottom, var(--terra-main), var(--olive-main));
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 40px;
+    animation: fadeUp 0.75s ease both;
+  }
+  .timeline-dot {
+    position: absolute; left: -39px; top: 4px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--terra-main);
+    border: 3px solid var(--cream-warm);
+    box-shadow: 0 0 0 2px var(--terra-main);
+  }
+  .timeline-item.alt .timeline-dot { background: var(--olive-main); box-shadow: 0 0 0 2px var(--olive-main); }
+  .timeline-year {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--terra-main); margin-bottom: 4px;
+  }
+  .timeline-item.alt .timeline-year { color: var(--olive-main); }
+  .timeline-title {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 1.25rem; font-weight: 700;
+    color: var(--earth-dark); margin-bottom: 6px;
+  }
+  .timeline-desc { font-size: 0.92rem; color: #6b584a; line-height: 1.65; }
+
+  /* ── VALUES ── */
+  .values-section { background: var(--earth-dark); }
+  .values-section .section-title { color: var(--cream-light); }
+  .values-section .section-tag { color: #f0c98a; }
+  .values-section .milestones-intro p { color: rgba(250,243,224,0.75); }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .value-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: var(--radius); padding: 32px 24px;
+    text-align: center;
+    transition: background 0.3s, transform 0.3s;
+    animation: fadeUp 0.75s ease both;
+  }
+  .value-card:hover {
+    background: rgba(194,112,62,0.18);
+    transform: translateY(-4px);
+  }
+  .value-icon {
+    font-size: 2.4rem; margin-bottom: 16px;
+    display: block;
+  }
+  .value-card h3 {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--cream-light); margin-bottom: 10px;
+  }
+  .value-card p { font-size: 0.88rem; color: rgba(250,243,224,0.72); line-height: 1.65; }
+
+  /* ── EDUCATION STRIP ── */
+  .education-strip { background: var(--cream-light); }
+  .edu-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .edu-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 28px 24px; box-shadow: var(--shadow);
+    border-top: 4px solid var(--terra-main);
+    animation: fadeUp 0.75s ease both;
+  }
+  .edu-card.alt { border-top-color: var(--olive-main); }
+  .edu-period {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--terra-main); margin-bottom: 8px;
+  }
+  .edu-card.alt .edu-period { color: var(--olive-main); }
+  .edu-card h4 {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--earth-dark); margin-bottom: 6px;
+  }
+  .edu-card p { font-size: 0.87rem; color: #6b584a; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--earth-dark); color: rgba(250,243,224,0.8); padding: 60px 24px 32px; }
+  .footer-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  .footer-brand h3 {
+    font-family: 'Cormorant Infant', serif; font-size: 1.5rem; font-weight: 700;
+    color: var(--cream-light); margin-bottom: 12px;
+  }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.7; }
+  .footer-col h4 {
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--terra-light); margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 8px; }
+  .footer-col ul li a { color: rgba(250,243,224,0.75); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--terra-light); }
+  .footer-info p { font-size: 0.88rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+  .footer-info p span:first-child { color: var(--terra-light); flex-shrink: 0; }
+  .footer-bottom {
+    max-width: 1160px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.8rem; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom a { color: var(--terra-light); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.75s ease both; }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; gap: 0;
+      position: absolute; top: 68px; left: 0; right: 0;
+      background: var(--cream-light); border-bottom: 2px solid var(--terra-light);
+      padding: 16px 0; }
+    .nav-links.open { display: flex; }
+    .nav-links li a { display: block; padding: 12px 24px; }
+    .nav-burger { display: block; }
+    .bio-grid { grid-template-columns: 1fr; gap: 40px; }
+    .arch-photo-outer { margin: 0 auto; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Кантора <span>Тера</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html" class="active">За нотариуса</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="faq.html">Въпроси</a></li>
+      <li><a href="contact.html">Контакти</a></li>
+    </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Начало</a> / За нотариуса</div>
+    <h1>За нотариуса</h1>
+    <p>Запознайте се с нотариус Елена Тодорова – опит, стойности и посвещение към правосъдието.</p>
+  </div>
+  <div class="page-hero-arch"></div>
+</div>
+
+<!-- BIO SECTION -->
+<section class="bio-section">
+  <div class="section-inner">
+    <div class="bio-grid">
+      <div class="arch-photo-wrap animate">
+        <div class="arch-photo-outer">
+          <div class="arch-frame">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop" alt="Нотариус Елена Тодорова">
+          </div>
+          <div class="arch-accent-dot"></div>
+          <div class="arch-ring arch-ring-1"></div>
+          <div class="arch-ring arch-ring-2"></div>
+          <div class="arch-badge">
+            <div class="num">18+</div>
+            <div class="label">Години опит</div>
+          </div>
+        </div>
+      </div>
+      <div class="bio-text animate delay-1">
+        <span class="section-tag">Вашият нотариус</span>
+        <h2 class="bio-name">Елена Тодорова</h2>
+        <div class="bio-title">Нотариус, Рег. № 247 · Нотариална Камара на България</div>
+        <div class="bio-body">
+          <p>С над 18 години опит в нотариалната практика, нотариус Елена Тодорова е едно от най-уважаваните имена в правния живот на Стара Загора и региона. Завършила е право в Юридическия факултет на Софийски университет „Св. Климент Охридски" с отличие.</p>
+          <p>След придобиване на нотариална правоспособност през 2006 г., тя изгражда своята кантора върху принципите на коректност, прозрачност и грижа за клиента. За нея всяка нотариална заверка е не просто формалност, а отговорност пред хората и закона.</p>
+          <p>Членува в Нотариалната камара на България и редовно участва в обучителни семинари и конференции за актуализиране на знанията си с последните изменения в законодателството.</p>
+        </div>
+        <div class="bio-qualifications">
+          <span class="qual-tag">Юридически факултет – СУ</span>
+          <span class="qual-tag">Нотариус от 2006 г.</span>
+          <span class="qual-tag green">НКБ – редовен член</span>
+          <span class="qual-tag green">Имотно право</span>
+          <span class="qual-tag">Семейно право</span>
+          <span class="qual-tag">Наследствено право</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section class="milestones-bg">
+  <div class="section-inner">
+    <div class="milestones-intro">
+      <span class="section-tag">Пътят ни</span>
+      <h2 class="section-title">Ключови моменти в нашата история</h2>
+      <p style="color:#6b584a;font-size:0.97rem">Изграждахме кантората постъпателно – с всяка изминала година добавяхме нови компетенции и разширявахме услугите си.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item animate">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2006</div>
+        <div class="timeline-title">Основаване на кантората</div>
+        <div class="timeline-desc">Нотариус Тодорова придобива нотариална правоспособност и открива Нотариална Кантора Тера в центъра на Стара Загора.</div>
+      </div>
+      <div class="timeline-item alt animate delay-1">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2010</div>
+        <div class="timeline-title">Разширяване на екипа</div>
+        <div class="timeline-desc">Към кантората се присъединяват двама опитни правни асистенти, което позволява по-бързо обслужване и разширен обхват на услугите.</div>
+      </div>
+      <div class="timeline-item animate delay-2">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2015</div>
+        <div class="timeline-title">Дигитализация на процесите</div>
+        <div class="timeline-desc">Внедряване на електронна система за управление на документи и резервации, улеснявайки достъпа на клиентите до услугите ни.</div>
+      </div>
+      <div class="timeline-item alt animate delay-3">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2019</div>
+        <div class="timeline-title">1 000 имотни сделки</div>
+        <div class="timeline-desc">Достигнахме важна граница – над 1 000 успешно оформени имотни сделки в региона на Стара Загора.</div>
+      </div>
+      <div class="timeline-item animate">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2024</div>
+        <div class="timeline-title">Ново местоположение</div>
+        <div class="timeline-desc">Преместване в обновен офис на централна локация с по-голямо пространство и по-добра достъпност за клиентите.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="section-inner">
+    <div class="milestones-intro" style="margin-bottom:48px">
+      <span class="section-tag">Нашите ценности</span>
+      <h2 class="section-title">Принципи, на които стъпваме</h2>
+      <p style="color:rgba(250,243,224,0.75);font-size:0.97rem">Всяко действие в нашата кантора се ръководи от фундаментални ценности, изградени с години практика.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card animate">
+        <span class="value-icon">⚖️</span>
+        <h3>Безпристрастност</h3>
+        <p>Действаме в интерес на всички страни по сделката, без да облагодетелстваме нито едната.</p>
+      </div>
+      <div class="value-card animate delay-1">
+        <span class="value-icon">🔒</span>
+        <h3>Конфиденциалност</h3>
+        <p>Пълна защита на личните данни и пълна тайна на всяка нотариална сделка.</p>
+      </div>
+      <div class="value-card animate delay-2">
+        <span class="value-icon">🌿</span>
+        <h3>Грижа за клиента</h3>
+        <p>Вслушваме се внимателно в нуждите на всеки клиент и предлагаме оптималното решение.</p>
+      </div>
+      <div class="value-card animate delay-3">
+        <span class="value-icon">📚</span>
+        <h3>Непрекъснато обучение</h3>
+        <p>Следим законодателните промени и непрекъснато усъвършенстваме квалификацията си.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education-strip">
+  <div class="section-inner">
+    <div style="margin-bottom:48px">
+      <span class="section-tag">Образование и квалификации</span>
+      <h2 class="section-title">Академичен профил</h2>
+    </div>
+    <div class="edu-cards">
+      <div class="edu-card animate">
+        <div class="edu-period">1997 – 2002</div>
+        <h4>Магистър по право</h4>
+        <p>Юридически факултет, Софийски университет „Св. Климент Охридски". Специализация: гражданскоправни науки.</p>
+      </div>
+      <div class="edu-card alt animate delay-1">
+        <div class="edu-period">2004 – 2006</div>
+        <h4>Помощник-нотариус</h4>
+        <p>Практически стаж при нотариус в Стара Загора. Придобиване на нотариална правоспособност.</p>
+      </div>
+      <div class="edu-card animate delay-2">
+        <div class="edu-period">2012</div>
+        <h4>Специализация – Имотно право</h4>
+        <p>Специализиран курс по вещно и имотно право към Нотариалната камара на България.</p>
+      </div>
+      <div class="edu-card alt animate delay-3">
+        <div class="edu-period">2018 – 2020</div>
+        <h4>Медиация и алтернативни методи</h4>
+        <p>Квалификация по медиация на граждански и търговски спорове. Сертифициран медиатор.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Нотариална Кантора Тера</h3>
+      <p>Вашият надежден нотариус в Стара Загора. Предоставяме пълен спектър от нотариални услуги с над 18 години опит, топлота и професионализъм.</p>
+      <div class="footer-info" style="margin-top:20px">
+        <p><span>📍</span><span>ул. „Цар Симеон Велики" 92, Стара Загора 6000</span></p>
+        <p><span>📞</span><span>042 600 123</span></p>
+        <p><span>✉️</span><span>office@kantora-tera.bg</span></p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Работно Време</h4>
+      <ul>
+        <li><a href="#">Пон – Пет: 09:00 – 17:30</a></li>
+        <li><a href="#">Събота: 10:00 – 13:00</a></li>
+        <li><a href="#">Неделя: Почивен ден</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Нотариална Кантора Тера. Всички права запазени.</span>
+    <span>Рег. № 247 при Нотариалната Камара на България · <a href="#">Поверителност</a></span>
+  </div>
+</footer>
+
+<script>
+  const burger = document.getElementById('navBurger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.animate').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контакти – Нотариална Кантора Кристал</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --p400: #a855f7; --p600: #7c3aed; --p300: #c084fc; --p900: #3b0764;
+    --glass: rgba(255,255,255,0.13); --glass-border: rgba(255,255,255,0.22);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(135deg, #1e0533 0%, #2d1b69 35%, #1a1a4e 65%, #0f172a 100%);
+    min-height: 100vh; color: #fff; overflow-x: hidden;
+  }
+  h1,h2,h3,h4 { font-family: 'Outfit', sans-serif; }
+
+  /* NAV */
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(59,7,100,0.45); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid var(--glass-border); padding:0 2rem; }
+  .nav-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:68px; }
+  .logo { font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:700; color:#fff; text-decoration:none; display:flex; align-items:center; gap:0.5rem; }
+  .nav-links { display:flex; gap:0.25rem; list-style:none; }
+  .nav-links a { display:block; padding:0.45rem 1rem; color:rgba(255,255,255,0.85); text-decoration:none; font-size:0.9rem; font-weight:500; border-radius:8px; transition:background 0.2s; }
+  .nav-links a:hover,.nav-links a.active { background:var(--glass); color:#fff; }
+  .nav-cta { background:linear-gradient(135deg,var(--p400),var(--p600)); color:#fff !important; border-radius:8px !important; padding:0.45rem 1.2rem !important; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { width:24px; height:2px; background:#fff; border-radius:2px; }
+
+  /* PAGE HERO */
+  .page-hero { min-height:50vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding:7rem 2rem 4rem; }
+  .page-hero-bg { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80') center/cover no-repeat; opacity:0.15; }
+  .page-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, transparent 20%, rgba(30,5,51,0.97) 100%); }
+  .hero-orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; }
+  .orb1 { width:420px; height:420px; top:-80px; right:-80px; background:rgba(168,85,247,0.32); }
+  .orb2 { width:300px; height:300px; bottom:-30px; left:-50px; background:rgba(124,58,237,0.25); }
+  .page-hero-content { max-width:1200px; margin:0 auto; width:100%; position:relative; z-index:2; }
+  .breadcrumb { font-size:0.82rem; color:rgba(255,255,255,0.5); margin-bottom:0.75rem; }
+  .breadcrumb a { color:var(--p300); text-decoration:none; }
+  .page-hero h1 { font-size:clamp(2.2rem,5vw,3.5rem); font-weight:800; }
+  .page-hero h1 span { background:linear-gradient(135deg,var(--p300),#e0aaff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .page-hero p { font-size:1.05rem; color:rgba(255,255,255,0.7); margin-top:0.75rem; max-width:540px; }
+
+  /* SHARED */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size:0.8rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--p300); margin-bottom:0.75rem; }
+  .section-title { font-size:clamp(1.8rem,4vw,2.6rem); font-weight:700; margin-bottom:0.5rem; }
+  .section-sub { color:rgba(255,255,255,0.65); font-size:1rem; }
+
+  @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(168,85,247,0.2)} 50%{box-shadow:0 0 40px rgba(168,85,247,0.45)} }
+
+  /* MAIN LAYOUT */
+  .contact-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+
+  /* FORM PANEL */
+  .form-panel {
+    background: var(--glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border); border-radius: 28px; padding: 2.5rem;
+    animation: glow 5s ease-in-out infinite;
+  }
+  .form-panel h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .form-panel > p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.8rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .form-group label { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.75); letter-spacing: 0.5px; }
+  .form-group label .req { color: var(--p300); margin-left: 2px; }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px; padding: 0.75rem 1rem;
+    color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+    outline: none; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--p400);
+    background: rgba(168,85,247,0.12);
+    box-shadow: 0 0 0 3px rgba(168,85,247,0.18);
+  }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: #2d1b69; color: #fff; }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+
+  .form-submit {
+    width: 100%; padding: 1rem;
+    background: linear-gradient(135deg, var(--p400), var(--p600));
+    color: #fff; border: none; border-radius: 14px;
+    font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(168,85,247,0.4);
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(168,85,247,0.5); }
+  .form-submit:active { transform: translateY(0); }
+
+  .form-note { font-size: 0.78rem; color: rgba(255,255,255,0.4); text-align: center; margin-top: 0.8rem; }
+
+  /* SUCCESS state */
+  .form-success {
+    display: none; text-align: center; padding: 2rem 1rem;
+  }
+  .form-success .check { font-size: 3.5rem; margin-bottom: 1rem; animation: float 2s ease-in-out infinite; }
+  .form-success h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .form-success p { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+
+  /* INFO CARDS */
+  .info-col { display: flex; flex-direction: column; gap: 1.2rem; }
+  .info-card {
+    background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 20px; padding: 1.5rem;
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .info-card:hover { transform: translateX(4px); box-shadow: 0 8px 30px rgba(168,85,247,0.15); }
+  .info-icon-wrap {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(124,58,237,0.25));
+    border: 1px solid rgba(168,85,247,0.35);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .info-card-body h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem; }
+  .info-card-body p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .info-card-body a { color: var(--p300); text-decoration: none; }
+  .info-card-body a:hover { text-decoration: underline; }
+
+  /* HOURS TABLE */
+  .hours-card {
+    background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 20px; padding: 1.5rem;
+  }
+  .hours-card h4 { font-size: 0.9rem; font-weight: 600; color: var(--p300); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .hours-table { width: 100%; border-collapse: collapse; }
+  .hours-table tr td { padding: 0.4rem 0; font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+  .hours-table tr td:last-child { text-align: right; font-weight: 500; color: #fff; }
+  .hours-table tr td.closed { color: rgba(255,255,255,0.35) !important; }
+  .dot-open { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; margin-right: 6px; box-shadow: 0 0 8px rgba(74,222,128,0.6); animation: glow 2s infinite; }
+
+  /* MAP PLACEHOLDER */
+  .map-section { padding: 0 2rem 5rem; }
+  .map-wrap {
+    max-width: 1200px; margin: 0 auto;
+    background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 24px; overflow: hidden;
+    position: relative;
+  }
+  .map-inner {
+    width: 100%; height: 320px;
+    background: linear-gradient(135deg, rgba(59,7,100,0.6), rgba(45,27,105,0.6));
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;
+    position: relative;
+  }
+  .map-inner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.12;
+  }
+  .map-inner-content { position: relative; z-index: 1; text-align: center; }
+  .map-pin { font-size: 3rem; animation: float 3s ease-in-out infinite; }
+  .map-inner-content h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+  .map-inner-content p { color: rgba(255,255,255,0.6); font-size: 0.88rem; }
+  .map-inner-content a {
+    display: inline-block; margin-top: 1rem;
+    background: linear-gradient(135deg, var(--p400), var(--p600));
+    color: #fff; padding: 0.65rem 1.5rem;
+    border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.88rem;
+    transition: transform 0.2s; box-shadow: 0 4px 16px rgba(168,85,247,0.4);
+  }
+  .map-inner-content a:hover { transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { background:rgba(15,7,30,0.8); backdrop-filter:blur(10px); border-top:1px solid var(--glass-border); padding:3rem 2rem 1.5rem; }
+  .footer-inner { max-width:1200px; margin:0 auto; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:2.5rem; margin-bottom:2.5rem; }
+  .footer-brand p { color:rgba(255,255,255,0.55); font-size:0.88rem; line-height:1.7; margin-top:0.75rem; }
+  .footer-col h4 { font-family:'Outfit',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--p300); margin-bottom:1rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.55rem; }
+  .footer-col ul li a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.88rem; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:#fff; }
+  .footer-info p { color:rgba(255,255,255,0.6); font-size:0.88rem; line-height:1.8; }
+  .footer-bottom { border-top:1px solid var(--glass-border); padding-top:1.5rem; text-align:center; color:rgba(255,255,255,0.35); font-size:0.8rem; }
+
+  @media(max-width:960px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media(max-width:600px) {
+    .nav-links { display:none; flex-direction:column; position:absolute; top:68px; left:0; right:0; background:rgba(30,5,51,0.97); padding:1rem; }
+    .nav-links.open { display:flex; }
+    .hamburger { display:flex; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">💎 Кантора Кристал</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нотариуса</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="faq.html">Въпроси</a></li>
+      <li><a href="contact.html" class="active nav-cta">Контакти</a></li>
+    </ul>
+    <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Начало</a> › Контакти</div>
+    <h1>Свържете се <span>с нас</span></h1>
+    <p>Запазете консултация онлайн или ни потърсете директно. Отговаряме бързо и с внимание.</p>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section>
+  <div class="section-inner">
+    <div class="contact-layout">
+
+      <!-- FORM -->
+      <div class="form-panel">
+        <h3>Запази консултация</h3>
+        <p>Попълнете формата и ще се свържем с вас до 2 работни часа.</p>
+
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Три имена <span class="req">*</span></label>
+              <input type="text" placeholder="Иван Иванов" required>
+            </div>
+            <div class="form-group">
+              <label>Телефон <span class="req">*</span></label>
+              <input type="tel" placeholder="+359 88 123 4567" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Имейл адрес <span class="req">*</span></label>
+            <input type="email" placeholder="example@email.bg" required>
+          </div>
+
+          <div class="form-group">
+            <label>Тип услуга <span class="req">*</span></label>
+            <select required>
+              <option value="" disabled selected>Изберете услуга...</option>
+              <option>Нотариална заверка</option>
+              <option>Пълномощно</option>
+              <option>Нотариален акт / Имотна сделка</option>
+              <option>Договор</option>
+              <option>Удостоверение</option>
+              <option>Препис</option>
+              <option>Дарение</option>
+              <option>Наследство</option>
+              <option>Брачен договор</option>
+              <option>Друго</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Предпочитана дата</label>
+              <input type="date">
+            </div>
+            <div class="form-group">
+              <label>Предпочитан час</label>
+              <select>
+                <option value="" disabled selected>Изберете час...</option>
+                <option>09:00 – 10:00</option>
+                <option>10:00 – 11:00</option>
+                <option>11:00 – 12:00</option>
+                <option>13:00 – 14:00</option>
+                <option>14:00 – 15:00</option>
+                <option>15:00 – 16:00</option>
+                <option>16:00 – 17:00</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Описание на въпроса</label>
+            <textarea placeholder="Опишете накратко с какво можем да ви помогнем..."></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Изпрати запитване →</button>
+          <p class="form-note">Данните се обработват съгласно GDPR. Не споделяме информацията ви с трети страни.</p>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="check">✅</div>
+          <h3>Запитването е изпратено!</h3>
+          <p>Ще се свържем с вас до 2 работни часа на посочения имейл или телефон.</p>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="info-col">
+        <div class="info-card">
+          <div class="info-icon-wrap">📍</div>
+          <div class="info-card-body">
+            <h4>Адрес</h4>
+            <p>ул. „Преслав" 42, ет. 3, офис 8<br>9000 Варна, България<br><a href="#">Вижте на картата →</a></p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon-wrap">📞</div>
+          <div class="info-card-body">
+            <h4>Телефони</h4>
+            <p>
+              <a href="tel:+35952123456">+359 52 123 456</a> (кантора)<br>
+              <a href="tel:+359881234567">+359 88 123 4567</a> (мобилен)<br>
+              Пон–Пет: 08:00 – 18:00
+            </p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon-wrap">✉️</div>
+          <div class="info-card-body">
+            <h4>Имейл</h4>
+            <p>
+              <a href="mailto:info@kantora-kristal.bg">info@kantora-kristal.bg</a><br>
+              <a href="mailto:konsult@kantora-kristal.bg">konsult@kantora-kristal.bg</a><br>
+              Отговаряме до 2 работни часа
+            </p>
+          </div>
+        </div>
+
+        <div class="hours-card">
+          <h4><span class="dot-open"></span> Работно време</h4>
+          <table class="hours-table">
+            <tr><td>Понеделник</td><td>09:00 – 17:30</td></tr>
+            <tr><td>Вторник</td><td>09:00 – 17:30</td></tr>
+            <tr><td>Сряда</td><td>09:00 – 17:30</td></tr>
+            <tr><td>Четвъртък</td><td>09:00 – 17:30</td></tr>
+            <tr><td>Петък</td><td>09:00 – 17:00</td></tr>
+            <tr><td>Събота</td><td>10:00 – 13:00 *</td></tr>
+            <tr><td class="closed">Неделя</td><td class="closed">Почивен ден</td></tr>
+          </table>
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.4); margin-top:0.75rem;">* Събота – само с предварително записване</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon-wrap">🚌</div>
+          <div class="info-card-body">
+            <h4>Транспорт</h4>
+            <p>Автобусни линии 1, 7, 22 – спирка „Преслав".<br>Паркинг на 50 м – ул. „Дедеагач".</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="map-wrap">
+    <div class="map-inner">
+      <div class="map-inner-content">
+        <div class="map-pin">📍</div>
+        <h3>Нотариална Кантора Кристал</h3>
+        <p>ул. „Преслав" 42, ет. 3 – 9000 Варна</p>
+        <a href="https://maps.google.com/?q=Варна,+ул.+Преслав+42" target="_blank" rel="noopener">Отвори в Google Maps</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">💎 Кантора Кристал</a>
+        <p>Нотариална кантора с дългогодишна традиция и репутация в Варна.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="index.html">Начало</a></li>
+          <li><a href="about.html">За нотариуса</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="faq.html">Въпроси</a></li>
+          <li><a href="contact.html">Контакти</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="services.html">Нотариални заверки</a></li>
+          <li><a href="services.html">Пълномощни</a></li>
+          <li><a href="services.html">Договори</a></li>
+          <li><a href="services.html">Имотни сделки</a></li>
+        </ul>
+      </div>
+      <div class="footer-info footer-col">
+        <h4>Контакти</h4>
+        <p>📍 ул. „Преслав" 42, ет. 3<br>9000 Варна, България</p>
+        <p style="margin-top:0.5rem;">📞 +359 52 123 456</p>
+        <p>✉ info@kantora-kristal.bg</p>
+        <p style="margin-top:0.5rem;">Пон–Пет: 09:00–17:30</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Нотариална Кантора Кристал. Всички права запазени.</div>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  form.style.opacity = '0';
+  form.style.transition = 'opacity 0.4s';
+  setTimeout(() => {
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.style.animation = 'slideUp 0.5s ease both';
+  }, 400);
+}
+
+// Date input: set min to today
+const dateInput = document.querySelector('input[type="date"]');
+if (dateInput) {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  dateInput.min = `${yyyy}-${mm}-${dd}`;
+}
+</script>
+</body>
+</html>

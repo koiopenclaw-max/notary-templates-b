@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Услуги – Нотариална Кантора Кристал</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --p400: #a855f7; --p600: #7c3aed; --p300: #c084fc; --p900: #3b0764;
+    --glass: rgba(255,255,255,0.13); --glass-border: rgba(255,255,255,0.22);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(135deg, #1e0533 0%, #2d1b69 35%, #1a1a4e 65%, #0f172a 100%);
+    min-height: 100vh; color: #fff; overflow-x: hidden;
+  }
+  h1,h2,h3,h4 { font-family: 'Outfit', sans-serif; }
+
+  /* NAV */
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(59,7,100,0.45); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid var(--glass-border); padding:0 2rem; }
+  .nav-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:68px; }
+  .logo { font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:700; color:#fff; text-decoration:none; display:flex; align-items:center; gap:0.5rem; }
+  .nav-links { display:flex; gap:0.25rem; list-style:none; }
+  .nav-links a { display:block; padding:0.45rem 1rem; color:rgba(255,255,255,0.85); text-decoration:none; font-size:0.9rem; font-weight:500; border-radius:8px; transition:background 0.2s; }
+  .nav-links a:hover,.nav-links a.active { background:var(--glass); color:#fff; }
+  .nav-cta { background:linear-gradient(135deg,var(--p400),var(--p600)); color:#fff !important; border-radius:8px !important; padding:0.45rem 1.2rem !important; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { width:24px; height:2px; background:#fff; border-radius:2px; }
+
+  /* PAGE HERO */
+  .page-hero { min-height:50vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding:7rem 2rem 4rem; }
+  .page-hero-bg { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80') center/cover no-repeat; opacity:0.15; }
+  .page-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, transparent 20%, rgba(30,5,51,0.95) 100%); }
+  .hero-orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; }
+  .orb1 { width:400px; height:400px; top:-60px; right:-60px; background:rgba(168,85,247,0.3); }
+  .orb2 { width:280px; height:280px; bottom:-40px; left:-40px; background:rgba(124,58,237,0.25); }
+  .page-hero-content { max-width:1200px; margin:0 auto; width:100%; position:relative; z-index:2; }
+  .breadcrumb { font-size:0.82rem; color:rgba(255,255,255,0.5); margin-bottom:0.75rem; }
+  .breadcrumb a { color:var(--p300); text-decoration:none; }
+  .page-hero h1 { font-size:clamp(2.2rem,5vw,3.5rem); font-weight:800; }
+  .page-hero h1 span { background:linear-gradient(135deg,var(--p300),#e0aaff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .page-hero p { font-size:1.05rem; color:rgba(255,255,255,0.7); margin-top:0.75rem; max-width:540px; }
+
+  /* SHARED */
+  section { padding:5rem 2rem; }
+  .section-inner { max-width:1200px; margin:0 auto; }
+  .section-label { font-size:0.8rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--p300); margin-bottom:0.75rem; }
+  .section-title { font-size:clamp(1.8rem,4vw,2.6rem); font-weight:700; margin-bottom:1rem; }
+  .section-sub { color:rgba(255,255,255,0.65); font-size:1.05rem; max-width:520px; }
+  .btn-primary { background:linear-gradient(135deg,var(--p400),var(--p600)); color:#fff; padding:0.85rem 2rem; border-radius:12px; text-decoration:none; font-weight:600; font-size:0.95rem; transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 4px 20px rgba(168,85,247,0.4); display:inline-block; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(168,85,247,0.5); }
+
+  @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+  /* SERVICES GRID */
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .service-card {
+    background:var(--glass); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--glass-border); border-radius:22px; padding:2rem;
+    transition:transform 0.3s, box-shadow 0.3s; position:relative; overflow:hidden;
+  }
+  .service-card::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg, rgba(168,85,247,0.08), transparent);
+    opacity:0; transition:opacity 0.3s;
+  }
+  .service-card:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(168,85,247,0.22); }
+  .service-card:hover::after { opacity:1; }
+  .service-icon-wrap {
+    width:60px; height:60px;
+    background:linear-gradient(135deg, rgba(168,85,247,0.3), rgba(124,58,237,0.3));
+    border:1px solid rgba(168,85,247,0.4);
+    border-radius:16px; display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem; margin-bottom:1.3rem;
+  }
+  .service-card h3 { font-size:1.15rem; font-weight:600; margin-bottom:0.6rem; }
+  .service-card p { font-size:0.88rem; color:rgba(255,255,255,0.68); line-height:1.7; }
+  .service-link { display:inline-flex; align-items:center; gap:0.4rem; color:var(--p300); font-size:0.85rem; font-weight:600; text-decoration:none; margin-top:1rem; transition:gap 0.2s; }
+  .service-link:hover { gap:0.7rem; }
+  .service-card ul { margin-top:0.8rem; padding-left:0; list-style:none; }
+  .service-card ul li { font-size:0.83rem; color:rgba(255,255,255,0.65); padding:0.2rem 0; padding-left:1.2rem; position:relative; }
+  .service-card ul li::before { content:'›'; position:absolute; left:0; color:var(--p300); }
+
+  /* PROCESS */
+  .process-section { background:rgba(59,7,100,0.2); }
+  .process-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0; margin-top:3rem; position:relative; }
+  .process-steps::before {
+    content:''; position:absolute; top:48px; left:10%; right:10%; height:2px;
+    background:linear-gradient(90deg, var(--p600), var(--p300));
+    opacity:0.4;
+  }
+  .step {
+    background:var(--glass); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--glass-border); border-radius:20px; padding:2rem 1.5rem;
+    text-align:center; position:relative; margin:0 0.5rem;
+    transition:transform 0.3s, box-shadow 0.3s;
+  }
+  .step:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(168,85,247,0.2); }
+  .step-num {
+    width:48px; height:48px;
+    background:linear-gradient(135deg, var(--p400), var(--p600));
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Outfit',sans-serif; font-size:1.1rem; font-weight:700;
+    margin:0 auto 1rem; position:relative; z-index:1;
+    box-shadow:0 4px 16px rgba(168,85,247,0.4);
+  }
+  .step h3 { font-size:0.95rem; font-weight:600; margin-bottom:0.5rem; }
+  .step p { font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.6; }
+
+  /* FOOTER */
+  footer { background:rgba(15,7,30,0.8); backdrop-filter:blur(10px); border-top:1px solid var(--glass-border); padding:3rem 2rem 1.5rem; }
+  .footer-inner { max-width:1200px; margin:0 auto; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:2.5rem; margin-bottom:2.5rem; }
+  .footer-brand p { color:rgba(255,255,255,0.55); font-size:0.88rem; line-height:1.7; margin-top:0.75rem; }
+  .footer-col h4 { font-family:'Outfit',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--p300); margin-bottom:1rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.55rem; }
+  .footer-col ul li a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.88rem; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:#fff; }
+  .footer-info p { color:rgba(255,255,255,0.6); font-size:0.88rem; line-height:1.8; }
+  .footer-bottom { border-top:1px solid var(--glass-border); padding-top:1.5rem; text-align:center; color:rgba(255,255,255,0.35); font-size:0.8rem; }
+
+  @media(max-width:900px) {
+    .process-steps::before { display:none; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+  }
+  @media(max-width:600px) {
+    .nav-links { display:none; flex-direction:column; position:absolute; top:68px; left:0; right:0; background:rgba(30,5,51,0.97); padding:1rem; }
+    .nav-links.open { display:flex; }
+    .hamburger { display:flex; }
+    .footer-grid { grid-template-columns:1fr; }
+    .process-steps { grid-template-columns:1fr; }
+    .step { margin:0 0 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">💎 Кантора Кристал</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нотариуса</a></li>
+      <li><a href="services.html" class="active">Услуги</a></li>
+      <li><a href="faq.html">Въпроси</a></li>
+      <li><a href="contact.html" class="nav-cta">Контакти</a></li>
+    </ul>
+    <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Начало</a> › Услуги</div>
+    <h1>Нашите <span>услуги</span></h1>
+    <p>Пълен спектър от нотариални услуги – бързо, точно и с необходимата правна сигурност.</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Какво предлагаме</div>
+    <h2 class="section-title">Нотариални услуги</h2>
+    <p class="section-sub">Всяка услуга се извършва от квалифициран специалист, спазвайки всички законови изисквания.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon-wrap">🔏</div>
+        <h3>Нотариални заверки</h3>
+        <p>Заверка на подпис, заверка на препис, заверка на дата и съдържание на документи.</p>
+        <ul>
+          <li>Заверка на подпис върху документ</li>
+          <li>Заверка на верността на препис</li>
+          <li>Заверка на дата</li>
+          <li>Заверка на превод</li>
+        </ul>
+        <a href="contact.html" class="service-link">Запитване →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">📜</div>
+        <h3>Пълномощни</h3>
+        <p>Изготвяне и заверка на всички видове пълномощни – за управление на имущество, автомобил, банкови сметки и др.</p>
+        <ul>
+          <li>Генерално пълномощно</li>
+          <li>Специално пълномощно</li>
+          <li>Пълномощно за МПС</li>
+          <li>Пълномощно за банкови операции</li>
+        </ul>
+        <a href="contact.html" class="service-link">Запитване →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">📋</div>
+        <h3>Удостоверения</h3>
+        <p>Нотариални удостоверения за различни правни цели – наследство, семейно положение, адрес и др.</p>
+        <ul>
+          <li>Удостоверение за наследници</li>
+          <li>Семейно положение</li>
+          <li>Идентичност на имена</li>
+          <li>Съгласие за пътуване на дете</li>
+        </ul>
+        <a href="contact.html" class="service-link">Запитване →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">📑</div>
+        <h3>Преписи</h3>
+        <p>Нотариално заверени преписи от документи – верни копия с пълна правна стойност.</p>
+        <ul>
+          <li>Заверен препис от документ</li>
+          <li>Многостранни преписи</li>
+          <li>Архивни документи</li>
+        </ul>
+        <a href="contact.html" class="service-link">Запитване →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🤝</div>
+        <h3>Договори</h3>
+        <p>Изготвяне и нотариална заверка на всякакви договори – покупко-продажба, наем, дарение и др.</p>
+        <ul>
+          <li>Договор за покупко-продажба</li>
+          <li>Договор за наем</li>
+          <li>Договор за дарение</li>
+          <li>Брачен договор</li>
+        </ul>
+        <a href="contact.html" class="service-link">Запитване →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🏠</div>
+        <h3>Имотни сделки</h3>
+        <p>Цялостно съдействие при покупко-продажба на имоти, учредяване на ипотеки, вещни права и суперфиция.</p>
+        <ul>
+          <li>Покупко-продажба на имот</li>
+          <li>Ипотечни сделки</li>
+          <li>Учредяване на суперфиция</li>
+          <li>Доброволна делба</li>
+        </ul>
+        <a href="contact.html" class="service-link">Запитване →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="section-inner">
+    <div class="section-label">Как работим</div>
+    <h2 class="section-title">Процесът е прост</h2>
+    <p class="section-sub">Четири лесни стъпки от първия контакт до завършения документ.</p>
+
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Запитване</h3>
+        <p>Свържете се с нас по телефон, имейл или чрез формата за контакт.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Консултация</h3>
+        <p>Обсъждаме вашите нужди и ви информираме за необходимите документи.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Подготовка</h3>
+        <p>Изготвяме всички необходими документи с необходимото внимание.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Подписване</h3>
+        <p>Официално подписване и издаване на нотариално заверен документ.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:3rem;">
+      <a href="contact.html" class="btn-primary">Запазете час сега</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">💎 Кантора Кристал</a>
+        <p>Нотариална кантора с дългогодишна традиция и репутация в Варна.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="index.html">Начало</a></li>
+          <li><a href="about.html">За нотариуса</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="faq.html">Въпроси</a></li>
+          <li><a href="contact.html">Контакти</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="services.html">Нотариални заверки</a></li>
+          <li><a href="services.html">Пълномощни</a></li>
+          <li><a href="services.html">Договори</a></li>
+          <li><a href="services.html">Имотни сделки</a></li>
+        </ul>
+      </div>
+      <div class="footer-info footer-col">
+        <h4>Контакти</h4>
+        <p>📍 ул. „Преслав" 42, ет. 3<br>9000 Варна, България</p>
+        <p style="margin-top:0.5rem;">📞 +359 52 123 456</p>
+        <p>✉ info@kantora-kristal.bg</p>
+        <p style="margin-top:0.5rem;">Пон–Пет: 09:00–17:30</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Нотариална Кантора Кристал. Всички права запазени.</div>
+  </div>
+</footer>
+
+</body>
+</html>

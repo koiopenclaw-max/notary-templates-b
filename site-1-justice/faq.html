@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Въпроси и отговори – Нотариална Кантора Правосъдие</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --emerald-deep: #065f46;
+      --emerald-mid:  #047857;
+      --emerald-light:#059669;
+      --silver:       #c0c0c0;
+      --silver-light: #e5e7eb;
+      --dark-bg:      #1b1b2f;
+      --dark-card:    #12122a;
+      --white:        #ffffff;
+      --text-muted:   #9ca3af;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: var(--dark-bg); color: var(--white); min-height: 100vh; overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(27,27,47,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(192,192,192,0.15); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-brand .motif { font-size: 1.6rem; color: var(--emerald-light); }
+    .nav-brand span { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; line-height: 1.2; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--silver); text-decoration: none; transition: color 0.25s; position: relative; padding-bottom: 4px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--emerald-light); transform: scaleX(0); transform-origin: center; transition: transform 0.25s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--white); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--silver); border-radius: 2px; }
+
+    /* PAGE HERO */
+    .page-hero { padding-top: 72px; min-height: 320px; position: relative; display: flex; align-items: flex-end; overflow: hidden; }
+    .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?w=1600&q=80'); background-size: cover; background-position: center; filter: brightness(0.2); }
+    .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(27,27,47,0.95) 100%); }
+    .page-hero-content { position: relative; z-index: 2; padding: 3rem 2rem; max-width: 1140px; margin: 0 auto; width: 100%; }
+    .breadcrumb { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+    .breadcrumb a { color: var(--emerald-light); text-decoration: none; }
+    .page-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 900; color: var(--white); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.8rem; }
+    .page-title .motif { color: var(--emerald-light); }
+
+    /* SECTIONS */
+    section { padding: 5.5rem 2rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .container-wide { max-width: 1140px; margin: 0 auto; }
+    .section-label { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--emerald-light); display: block; margin-bottom: 0.7rem; }
+    .section-title { font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 1rem; }
+    .divider { width: 56px; height: 3px; background: linear-gradient(90deg, var(--emerald-mid), var(--emerald-light)); margin: 1rem 0 1.8rem; border-radius: 2px; }
+
+    /* CATEGORY TABS */
+    .faq-section { background: #111125; }
+    .faq-header { text-align: center; margin-bottom: 3rem; }
+    .faq-header .divider { margin: 1rem auto 0; }
+    .faq-header p { color: var(--text-muted); font-size: 0.97rem; max-width: 560px; margin: 0 auto; line-height: 1.8; }
+
+    .faq-categories {
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 3rem;
+    }
+    .cat-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.55rem 1.3rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s;
+      border: 1px solid rgba(192,192,192,0.2);
+      background: transparent;
+      color: var(--silver);
+    }
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--emerald-mid);
+      border-color: var(--emerald-mid);
+      color: var(--white);
+    }
+
+    /* ACCORDION */
+    .faq-group { margin-bottom: 2.5rem; }
+    .faq-group-title {
+      font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--emerald-light);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .faq-group-title::after { content: ''; flex: 1; height: 1px; background: rgba(5,150,105,0.3); }
+
+    .accordion-item {
+      background: var(--dark-card);
+      border: 1px solid rgba(192,192,192,0.1);
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+      overflow: hidden;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .accordion-item.visible { opacity: 1; transform: translateY(0); }
+    .accordion-item.open { border-color: rgba(5,150,105,0.4); }
+
+    .accordion-btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.3rem 1.6rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .accordion-btn:hover { background: rgba(5,150,105,0.06); }
+    .accordion-item.open .accordion-btn { background: rgba(5,150,105,0.08); }
+
+    .accordion-q {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.97rem; font-weight: 700;
+      color: var(--white);
+      line-height: 1.4;
+      flex: 1;
+    }
+    .accordion-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(5,150,105,0.15);
+      border: 1px solid rgba(5,150,105,0.35);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--emerald-light);
+      font-size: 1rem; font-weight: 700;
+      transition: transform 0.3s, background 0.2s;
+    }
+    .accordion-item.open .accordion-icon {
+      transform: rotate(45deg);
+      background: var(--emerald-mid);
+      color: var(--white);
+    }
+
+    .accordion-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .accordion-body.open { max-height: 600px; }
+
+    .accordion-content {
+      padding: 0 1.6rem 1.5rem;
+      border-top: 1px solid rgba(192,192,192,0.08);
+    }
+    .accordion-content p {
+      font-size: 0.92rem; color: var(--silver-light);
+      line-height: 1.85; margin-bottom: 0.8rem;
+    }
+    .accordion-content p:last-child { margin-bottom: 0; }
+    .accordion-content ul {
+      margin: 0.6rem 0 0.8rem 1.2rem;
+    }
+    .accordion-content ul li {
+      font-size: 0.9rem; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 0.3rem;
+    }
+    .accordion-content .note {
+      background: rgba(6,95,70,0.15);
+      border-left: 3px solid var(--emerald-mid);
+      padding: 0.8rem 1rem;
+      border-radius: 0 4px 4px 0;
+      margin-top: 0.8rem;
+    }
+    .accordion-content .note p { font-size: 0.85rem; color: var(--silver); margin: 0; }
+
+    /* CTA BOTTOM */
+    .faq-cta { background: var(--dark-bg); text-align: center; }
+    .faq-cta-inner { max-width: 620px; margin: 0 auto; }
+    .faq-cta .motif-lg { font-size: 2.6rem; display: block; margin-bottom: 1rem; color: var(--emerald-light); }
+    .faq-cta h2 { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: var(--white); margin-bottom: 1rem; }
+    .faq-cta p { font-size: 0.97rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
+    .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.85rem 2rem; border-radius: 3px; text-decoration: none; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; display: inline-block; }
+    .btn-primary { background: var(--emerald-mid); color: var(--white); border-color: var(--emerald-mid); }
+    .btn-primary:hover { background: var(--emerald-light); border-color: var(--emerald-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(5,150,105,0.4); }
+    .btn-outline { background: transparent; color: var(--silver-light); border-color: var(--silver); }
+    .btn-outline:hover { background: rgba(192,192,192,0.1); color: var(--white); border-color: var(--white); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: var(--dark-card); border-top: 1px solid rgba(192,192,192,0.1); padding: 3.5rem 2rem 1.5rem; }
+    .footer-grid { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+    .footer-brand .motif { font-size: 2rem; color: var(--emerald-light); display: block; margin-bottom: 0.6rem; }
+    .footer-brand-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.8rem; display: block; }
+    .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+    .footer-col h4 { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--silver); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a { font-size: 0.88rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--emerald-light); }
+    .footer-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 0.3rem; }
+    .footer-info strong { color: var(--silver); }
+    .footer-hours-row { display: flex; justify-content: space-between; font-size: 0.83rem; }
+    .footer-hours-row span:first-child { color: var(--text-muted); }
+    .footer-hours-row span:last-child { color: var(--silver-light); }
+    .footer-bottom { max-width: 1140px; margin: 0 auto; border-top: 1px solid rgba(192,192,192,0.08); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-bottom .motif-small { color: var(--emerald-light); font-size: 0.9rem; }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; background: rgba(27,27,47,0.98); padding: 1.5rem 2rem; gap: 1.2rem; border-bottom: 1px solid rgba(192,192,192,0.1); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+      section { padding: 4rem 1.2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .accordion-q { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <span class="motif">⚖</span>
+    <span>Нотариална Кантора<br>Правосъдие</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="about.html">За нотариуса</a></li>
+    <li><a href="services.html">Услуги</a></li>
+    <li><a href="faq.html" class="active">Въпроси</a></li>
+    <li><a href="contact.html">Контакти</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="breadcrumb"><a href="index.html">Начало</a> &rsaquo; Въпроси</p>
+    <h1 class="page-title"><span class="motif">⚖</span> Често задавани въпроси</h1>
+  </div>
+</div>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+  <div class="container">
+
+    <div class="faq-header fade-in">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Въпроси и отговори</h2>
+      <p>Тук ще намерите отговори на най-честите въпроси за нотариалните услуги. Ако вашият въпрос не е включен, свържете се с нас директно.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="faq-categories fade-in">
+      <button class="cat-btn active" data-cat="all">Всички</button>
+      <button class="cat-btn" data-cat="general">Общи</button>
+      <button class="cat-btn" data-cat="property">Имоти</button>
+      <button class="cat-btn" data-cat="docs">Документи</button>
+      <button class="cat-btn" data-cat="process">Процес</button>
+    </div>
+
+    <!-- GROUP: GENERAL -->
+    <div class="faq-group" data-group="general">
+      <div class="faq-group-title">⚖ Общи въпроси</div>
+
+      <div class="accordion-item" data-cat="general">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Какво прави нотариусът и защо ми е необходим?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Нотариусът е лице, натоварено от държавата да удостоверява правни сделки и факти. Нотариалното удостоверяване придава на документите публична достоверност и изпълнителна сила, което ги прави неоспорими пред съда.</p>
+            <p>Нотариусът ви е необходим при всякакви имотни сделки, изготвяне на пълномощни с широки права, наследствени въпроси, заверка на документи за чужбина и много други ситуации.</p>
+            <div class="note"><p><strong>Важно:</strong> Нотариусът задължително проверява самоличността на страните, тяхната правоспособност и наличието на вещни права преди всяко нотариално действие.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-cat="general">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Как да запиша час при нотариуса?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Можете да запишете час по следните начини:</p>
+            <ul>
+              <li>Чрез онлайн формата за записване на нашия уебсайт</li>
+              <li>По телефон на +359 2 987 6543 (в работно време)</li>
+              <li>По имейл на office@kantora-pravosudie.bg</li>
+              <li>На гише в кантората ни на бул. „Витоша" 45, ет. 3</li>
+            </ul>
+            <p>Препоръчваме предварително записване, за да избегнете чакане и да осигурим достатъчно време за вашия случай.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-cat="general">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Колко струват нотариалните услуги?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Нотариалните такси в България са регламентирани от Тарифа за нотариалните такси, приета от Министерски съвет. Таксите са задължителни и единни за всички нотариуси – не могат да бъдат намалени или увеличени.</p>
+            <p>Размерът на таксата зависи от:</p>
+            <ul>
+              <li>Вида на нотариалното действие</li>
+              <li>При сделки с имоти – от данъчната оценка или пазарната цена</li>
+              <li>Брой на страните и страници</li>
+            </ul>
+            <div class="note"><p>Консултацията за определяне на дължимата такса е безплатна. Свържете се с нас за точна информация.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: PROPERTY -->
+    <div class="faq-group" data-group="property">
+      <div class="faq-group-title">🏠 Имотни сделки</div>
+
+      <div class="accordion-item" data-cat="property">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Какви документи са нужни за покупко-продажба на имот?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>За извършване на нотариален акт за покупко-продажба на недвижим имот са необходими:</p>
+            <ul>
+              <li>Нотариален акт или друг документ за собственост</li>
+              <li>Удостоверение за данъчна оценка (от общината)</li>
+              <li>Скица на имота (от Агенция по кадастъра)</li>
+              <li>Удостоверение за тежести (от Имотен регистър)</li>
+              <li>Лични карти на страните</li>
+              <li>При съпружеска имуществена общност – съгласие на съпруга/съпругата</li>
+            </ul>
+            <p>Нашата кантора предлага пълно съдействие при събирането на всички необходими документи.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-cat="property">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Мога ли да продам имот чрез пълномощник?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Да, имотът може да бъде продаден чрез надлежно упълномощен представител. Пълномощното трябва да бъде нотариално заверено и да съдържа изрично правомощие за продажба на конкретния имот с определена или определяема цена.</p>
+            <p>Ако собственикът се намира в чужбина, пълномощното може да бъде заверено от български нотариус (при посещение) или от съответното посолство/консулство на България в страната по пребиваване.</p>
+            <div class="note"><p>Препоръчваме пълномощното да се изготви от нотариус, за да се избегнат проблеми при сделката.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: DOCS -->
+    <div class="faq-group" data-group="docs">
+      <div class="faq-group-title">📄 Документи и заверки</div>
+
+      <div class="accordion-item" data-cat="docs">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Каква е разликата между заверка на подпис и заверка на съдържание?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p><strong>Заверка на подпис</strong> – нотариусът удостоверява само, че определено лице е положило подписа си пред него, без да отговаря за съдържанието на документа.</p>
+            <p><strong>Заверка на съдържание</strong> – нотариусът удостоверява верността на съдържанието на документа, т.е. потвърждава, че преписът е идентичен с оригинала. Нотариусът не носи отговорност за верността на самото съдържание, а само за точността на копирането.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-cat="docs">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Необходима ли е апостил за заверени от вас документи?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Апостилът е специален печат, поставян от Министерството на правосъдието, който удостоверява автентичността на официален документ за използване в друга страна, подписала Хагската конвенция.</p>
+            <p>Нотариалните актове и заверките имат нужда от апостил, ако ще бъдат използвани в чужбина. Процедурата е:</p>
+            <ul>
+              <li>Нотариусът заверява документа</li>
+              <li>Минюстиция поставя апостил върху нотариалното удостоверяване</li>
+              <li>При нужда – превод и легализация</li>
+            </ul>
+            <div class="note"><p>Нашата кантора съдейства при насочване за получаване на апостил и при необходимост от превод.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-cat="docs">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Колко дълго е валидно пълномощното?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>По принцип пълномощното няма срок на валидност, освен ако в самото него изрично е посочен срок. Пълномощното се прекратява:</p>
+            <ul>
+              <li>При оттегляне от упълномощителя</li>
+              <li>При смъртта на упълномощителя или пълномощника</li>
+              <li>При поставяне под запрещение</li>
+              <li>При изпълнение на поръчката (ако е специално)</li>
+            </ul>
+            <p>На практика много институции изискват пълномощното да не е по-старо от 6 месеца. Препоръчваме да проверите изискванията на съответната институция.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: PROCESS -->
+    <div class="faq-group" data-group="process">
+      <div class="faq-group-title">⚡ Процес и срокове</div>
+
+      <div class="accordion-item" data-cat="process">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Колко дълго отнема извършването на нотариален акт?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Времето зависи от вида на нотариалното действие. Проста заверка на подпис може да отнеме само няколко минути. Нотариален акт за имотна сделка обикновено изисква:</p>
+            <ul>
+              <li>1–2 седмици за събиране на всички документи</li>
+              <li>1–2 часа за самото нотариално действие</li>
+              <li>Незабавно вписване в Имотния регистър (онлайн)</li>
+            </ul>
+            <p>При спешни случаи е възможно ускорено обслужване. Моля, уведомете ни предварително.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-cat="process">
+        <button class="accordion-btn" aria-expanded="false">
+          <span class="accordion-q">Трябва ли да се явя лично или мога да изпратя представител?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Личното явяване е задължително при заверка на подпис, тъй като нотариусът трябва да провери самоличността ви и да удостовери, че сте положили подписа лично пред него.</p>
+            <p>При имотни сделки може да се явите чрез представител с нотариално заверено пълномощно, което изрично урежда правомощията за конкретната сделка.</p>
+            <div class="note"><p>Носете валиден документ за самоличност (лична карта или паспорт) при всяко посещение в кантората.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="faq-cta">
+  <div class="faq-cta-inner fade-in">
+    <span class="motif-lg">⚖</span>
+    <h2>Не намерихте отговор?</h2>
+    <p>Свържете се с нас и нашият екип ще отговори на всеки ваш въпрос, свързан с нотариалните услуги. Предоставяме безплатни предварителни консултации.</p>
+    <div class="cta-row">
+      <a href="contact.html" class="btn btn-primary">Изпратете запитване</a>
+      <a href="tel:+35929876543" class="btn btn-outline">📞 Обадете се</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="motif">⚖</span>
+      <span class="footer-brand-name">Нотариална Кантора Правосъдие</span>
+      <p>Нотариус Елена Стоянова – вписана в Нотариалната камара на Република България. Предоставяме пълен спектър от нотариални услуги в София.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <ul>
+        <li><a href="services.html">Нотариални заверки</a></li>
+        <li><a href="services.html">Пълномощни</a></li>
+        <li><a href="services.html">Удостоверения</a></li>
+        <li><a href="services.html">Договори</a></li>
+        <li><a href="services.html">Имотни сделки</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-info">
+      <h4>Контакти</h4>
+      <p><strong>Адрес:</strong><br>бул. „Витоша" 45, ет. 3<br>1000 София, България</p>
+      <p><strong>Телефон:</strong><br>+359 2 987 6543</p>
+      <p><strong>Имейл:</strong><br>office@kantora-pravosudie.bg</p>
+      <div style="margin-top:0.8rem;">
+        <div class="footer-hours-row"><span>Пон – Пет</span><span>09:00 – 17:30</span></div>
+        <div class="footer-hours-row"><span>Събота</span><span>10:00 – 13:00</span></div>
+        <div class="footer-hours-row"><span>Неделя</span><span>Почивен ден</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Нотариална Кантора Правосъдие. Всички права запазени.</p>
+    <p class="motif-small">⚖ Правна сигурност за всяка стъпка</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // Accordion
+  document.querySelectorAll('.accordion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.accordion-item');
+      const body = item.querySelector('.accordion-body');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.accordion-item.open').forEach(openItem => {
+        openItem.classList.remove('open');
+        openItem.querySelector('.accordion-body').classList.remove('open');
+        openItem.querySelector('.accordion-btn').setAttribute('aria-expanded', 'false');
+      });
+
+      // Open clicked if was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        body.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Category filter
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('.accordion-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+          // Close if hidden
+          item.classList.remove('open');
+          item.querySelector('.accordion-body').classList.remove('open');
+        }
+      });
+      // Show/hide group titles
+      document.querySelectorAll('.faq-group').forEach(group => {
+        if (cat === 'all' || group.dataset.group === cat) {
+          group.style.display = '';
+        } else {
+          const hasVisible = [...group.querySelectorAll('.accordion-item')]
+            .some(i => i.dataset.cat === cat);
+          group.style.display = hasVisible ? '' : 'none';
+        }
+      });
+    });
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in, .accordion-item').forEach((el, i) => {
+    if (el.classList.contains('accordion-item')) el.style.transitionDelay = `${(i % 5) * 0.07}s`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

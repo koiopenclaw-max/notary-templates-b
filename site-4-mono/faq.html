@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Въпроси — Нотариус Моно</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000000;
+      --near-black: #111111;
+      --dark: #333333;
+      --mid: #666666;
+      --light-mid: #999999;
+      --light: #cccccc;
+      --near-white: #eeeeee;
+      --off-white: #fafafa;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--black);
+      border-bottom: 2px solid var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--light);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--black);
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1.5rem;
+        border-bottom: 2px solid var(--white);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      margin-top: 64px;
+      background: var(--black);
+      padding: 5rem 2rem 4rem;
+      border-bottom: 2px solid var(--white);
+    }
+
+    .page-header-inner { max-width: 1200px; margin: 0 auto; }
+
+    .page-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+      animation: fadeIn 0.7s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      animation: fadeIn 0.8s 0.1s ease both;
+    }
+
+    .page-title .ghost {
+      -webkit-text-stroke: 1.5px var(--mid);
+      color: transparent;
+    }
+
+    /* INTRO BAR */
+    .intro-bar {
+      background: var(--near-white);
+      border-bottom: 2px solid var(--black);
+      padding: 2rem;
+    }
+
+    .intro-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .intro-bar-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      color: var(--dark);
+      line-height: 1.6;
+      max-width: 580px;
+    }
+
+    .intro-bar-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      white-space: nowrap;
+    }
+
+    /* SEARCH BAR */
+    .search-bar {
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+      padding: 1.5rem 2rem;
+    }
+
+    .search-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      white-space: nowrap;
+    }
+
+    .search-input {
+      flex: 1;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--black);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--light);
+      padding: 0.5rem 0;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-bottom-color: var(--black); }
+    .search-input::placeholder { color: var(--light-mid); }
+
+    /* CATEGORIES */
+    .categories {
+      background: var(--white);
+      border-bottom: 1px solid var(--near-white);
+      padding: 1rem 2rem;
+    }
+
+    .categories-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      border: 1px solid var(--near-white);
+      background: transparent;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn:hover, .cat-btn.active {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    /* FAQ */
+    .faq-section {
+      background: var(--white);
+      padding: 0 2rem 6rem;
+    }
+
+    .faq-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .faq-group {
+      border-top: 2px solid var(--black);
+      margin-top: 4rem;
+    }
+
+    .faq-group-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--near-white);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--near-white);
+      overflow: hidden;
+    }
+
+    .faq-item.hidden { display: none; }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.75rem 0;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      transition: background 0.15s;
+    }
+
+    .faq-question:hover { background: var(--off-white); padding-left: 0.5rem; padding-right: 0.5rem; margin-left: -0.5rem; margin-right: -0.5rem; }
+
+    .faq-q-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--light-mid);
+      padding-top: 0.2rem;
+      min-width: 28px;
+    }
+
+    .faq-q-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .faq-toggle {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--black);
+      min-width: 28px;
+      text-align: right;
+      line-height: 1;
+      padding-top: 0.1rem;
+      transition: transform 0.25s;
+      user-select: none;
+    }
+
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 0;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 600px;
+      padding-bottom: 2rem;
+    }
+
+    .faq-answer-inner {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 0 2rem;
+    }
+
+    .faq-answer-bar {
+      width: 2px;
+      background: var(--black);
+      margin-left: 13px;
+    }
+
+    .faq-answer-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      color: var(--dark);
+      line-height: 1.8;
+    }
+
+    .faq-answer-text strong {
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .faq-answer-text ul {
+      margin-top: 0.75rem;
+      padding-left: 1.25rem;
+    }
+
+    .faq-answer-text ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* STILL HAVE Q -->*/
+    .still-q {
+      background: var(--black);
+      padding: 5rem 2rem;
+      border-top: 2px solid var(--white);
+    }
+
+    .still-q-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .still-q-heading {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+    }
+
+    .still-q-heading .outline {
+      -webkit-text-stroke: 1.5px var(--mid);
+      color: transparent;
+    }
+
+    .still-q-right {}
+
+    .still-q-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .still-q-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .still-q-link {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 1.75rem;
+      transition: all 0.2s;
+      border: 2px solid;
+    }
+
+    .still-q-link.primary { background: var(--white); color: var(--black); border-color: var(--white); }
+    .still-q-link.primary:hover { background: transparent; color: var(--white); }
+    .still-q-link.secondary { background: transparent; color: var(--mid); border-color: var(--dark); }
+    .still-q-link.secondary:hover { border-color: var(--white); color: var(--white); }
+
+    @media (max-width: 768px) {
+      .still-q-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 2px solid var(--white);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--dark);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; }
+    .footer-tagline { font-family: 'Syne', sans-serif; font-size: 0.85rem; color: var(--mid); line-height: 1.6; }
+    .footer-col-title { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.25rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-col ul a { font-family: 'Syne', sans-serif; font-size: 0.85rem; color: var(--light); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-contact-item { font-family: 'Syne', sans-serif; font-size: 0.85rem; color: var(--light); margin-bottom: 0.75rem; line-height: 1.5; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--mid); letter-spacing: 0.1em; }
+
+    @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .footer-top { grid-template-columns: 1fr; gap: 2rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Нотариус Моно</a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нотариуса</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="faq.html" class="active">Въпроси</a></li>
+      <li><a href="contact.html">Контакти</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <p class="page-eyebrow">// Често задавани въпроси</p>
+      <h1 class="page-title">
+        <span class="ghost">ВЪПРО</span>СИ<br>
+        И ОТГОВОРИ
+      </h1>
+    </div>
+  </header>
+
+  <!-- INTRO BAR -->
+  <div class="intro-bar">
+    <div class="intro-bar-inner">
+      <p class="intro-bar-text">Отговори на най-честите въпроси, свързани с нотариалните услуги, процедури и изисквания. Не намирате отговор? Свържете се с нас.</p>
+      <span class="intro-bar-count">// 10 въпроса</span>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <div class="search-bar-inner">
+      <span class="search-label">// Търси</span>
+      <input type="text" class="search-input" placeholder="Напишете ключова дума..." id="faqSearch" oninput="filterFAQ()" autocomplete="off">
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="categories">
+    <div class="categories-inner">
+      <button class="cat-btn active" onclick="filterCategory('all', this)">Всички</button>
+      <button class="cat-btn" onclick="filterCategory('general', this)">Общи</button>
+      <button class="cat-btn" onclick="filterCategory('property', this)">Имоти</button>
+      <button class="cat-btn" onclick="filterCategory('poa', this)">Пълномощни</button>
+      <button class="cat-btn" onclick="filterCategory('docs', this)">Документи</button>
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section">
+    <div class="faq-inner">
+
+      <div class="faq-group" id="group-general">
+        <p class="faq-group-title">// Общи въпроси</p>
+
+        <div class="faq-item" data-category="general">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">01</span>
+            <span class="faq-q-text">Какво представлява нотариалната заверка и за какво се използва?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>Нотариалната заверка е официално удостоверяване от нотариус, с което се потвърждава автентичността на документ, подпис или съдържание. Тя придава на документа <strong>пълна юридическа сила</strong> пред трети лица — съдилища, институции, банки и чуждестранни органи.</p>
+                <p style="margin-top:0.75rem">Заверката е задължителна при множество правни сделки — прехвърляне на имоти, сключване на договори с по-голям интерес, упълномощаване за важни действия и др.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="general">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">02</span>
+            <span class="faq-q-text">Как да запазя час при нотариуса?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>Можете да запазите час по три начина:</p>
+                <ul>
+                  <li>По телефон: <strong>+359 56 800 100</strong> в работно време</li>
+                  <li>По имейл: office@notarius-mono.bg</li>
+                  <li>Онлайн чрез формата на страницата <a href="contact.html" style="color:var(--black)">Контакти</a></li>
+                </ul>
+                <p style="margin-top:0.75rem">Препоръчваме да запазите час предварително, за да осигурим достатъчно време за вашия случай и да ви информираме какви документи да подготвите.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="general">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">03</span>
+            <span class="faq-q-text">Какви такси се заплащат при нотариалните услуги?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>Нотариалните такси се определят съгласно <strong>Тарифата за нотариалните такси</strong>, приета към Закона за нотариусите и нотариалната дейност. Размерът зависи от вида на действието и материалния интерес на сделката.</p>
+                <p style="margin-top:0.75rem">За точна информация за конкретната ви ситуация — свържете се с нас. Консултацията за размера на таксата е безплатна.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="faq-group" id="group-property">
+        <p class="faq-group-title">// Имотни сделки</p>
+
+        <div class="faq-item" data-category="property">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">04</span>
+            <span class="faq-q-text">Какви документи са необходими за покупко-продажба на недвижим имот?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>За нотариалното оформяне на имотна сделка обикновено са необходими:</p>
+                <ul>
+                  <li>Документи за собственост на имота (нотариален акт, решение за реституция и др.)</li>
+                  <li>Скица на имота (актуална — до 6 месеца)</li>
+                  <li>Данъчна оценка (актуална)</li>
+                  <li>Удостоверение за тежести от Имотния регистър</li>
+                  <li>Лични карти на страните по сделката</li>
+                  <li>Удостоверение за семейно положение (при необходимост)</li>
+                </ul>
+                <p style="margin-top:0.75rem">Списъкът може да варира спрямо конкретния случай. Ще ви информираме точно при запазване на час.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="property">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">05</span>
+            <span class="faq-q-text">Колко време отнема оформянето на имотна сделка?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>При наличие на всички необходими документи, нотариалното изповядване на имотна сделка обикновено отнема <strong>1–3 часа</strong> в деня на сделката. Вписването в Агенцията по вписванията се извършва в рамките на <strong>1–3 работни дни</strong>.</p>
+                <p style="margin-top:0.75rem">Предварителната подготовка (проверка на документи, правна проверка на имота) се препоръчва да се извърши поне 1–2 седмици преди сделката.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="property">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">06</span>
+            <span class="faq-q-text">Задължително ли е предварителният договор преди нотариалния акт?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>Предварителният договор <strong>не е задължителен</strong> по закон, но се препоръчва при имотни сделки, при които страните имат нужда от по-дълъг срок за подготовка — осигуряване на финансиране, събиране на документи и т.н.</p>
+                <p style="margin-top:0.75rem">Предварителният договор може да бъде сключен в обикновена писмена форма или да бъде нотариално заверен за по-голяма сигурност. При неизпълнение той може да бъде обявен за окончателен договор по съдебен ред.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="faq-group" id="group-poa">
+        <p class="faq-group-title">// Пълномощни</p>
+
+        <div class="faq-item" data-category="poa">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">07</span>
+            <span class="faq-q-text">Мога ли да упълномощя някого да продаде имота ми вместо мен?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>Да — чрез <strong>нотариално заверено пълномощно</strong> можете да упълномощите доверено лице да извърши имотна сделка от ваше ime. Пълномощното трябва да бъде нотариално заверено и да съдържа точни данни за имота и правомощията на пълномощника.</p>
+                <p style="margin-top:0.75rem">Препоръчваме консултация преди издаване на такова пълномощно, тъй като то носи значими правни последствия.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="poa">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">08</span>
+            <span class="faq-q-text">Колко е валидно едно нотариално заверено пълномощно?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>Нотариално заверено пълномощно е <strong>безсрочно</strong>, освен ако в него изрично е посочен срок на валидност. То остава в сила до изтичане на срока или до изричното му оттегляне от упълномощителя.</p>
+                <p style="margin-top:0.75rem">При смърт на упълномощителя пълномощното автоматично се прекратява. Много банки и институции изискват пълномощното да е издадено в определен срок преди използването му (напр. до 6 месеца).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="faq-group" id="group-docs">
+        <p class="faq-group-title">// Документи и процедури</p>
+
+        <div class="faq-item" data-category="docs">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">09</span>
+            <span class="faq-q-text">Как се заверяват документи за употреба в чужбина?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>За документи, предназначени за употреба в чужбина, в зависимост от страната може да се изисква:</p>
+                <ul>
+                  <li><strong>Апостил</strong> — за страни членки на Хагската конвенция</li>
+                  <li><strong>Легализация</strong> — за останалите страни, чрез Министерство на външните работи</li>
+                  <li>Превод от <strong>заклет преводач</strong></li>
+                </ul>
+                <p style="margin-top:0.75rem">Нотариалната заверка е първата стъпка от процеса. Апостилът се поставя от Министерство на правосъдието.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="docs">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-num">10</span>
+            <span class="faq-q-text">Необходимо ли е физическото присъствие на всички страни при нотариалното действие?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-bar"></div>
+              <div class="faq-answer-text">
+                <p>При повечето нотариални действия се изисква <strong>физическото присъствие</strong> на страните или техни надлежно упълномощени представители. Нотариусът трябва да удостовери самоличността на лицата.</p>
+                <p style="margin-top:0.75rem">Ако дадена страна не може да присъства лично, тя трябва предварително да издаде нотариално заверено пълномощно на свой представител. Свържете се с нас за конкретни указания спрямо вашия случай.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STILL Q -->
+  <section class="still-q">
+    <div class="still-q-inner">
+      <h2 class="still-q-heading">
+        ИМАТЕ<br>
+        <span class="outline">ОЩЕ</span><br>
+        ВЪПРОСИ?
+      </h2>
+      <div class="still-q-right">
+        <p class="still-q-text">Ако не намерихте отговора, който търсите, свържете се с нас директно. Нашият екип ще отговори в рамките на работния ден.</p>
+        <div class="still-q-links">
+          <a href="contact.html" class="still-q-link primary">Свържете се с нас</a>
+          <a href="tel:+35956800100" class="still-q-link secondary">+359 56 800 100</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand">НОТАРИУС МОНО</p>
+          <p class="footer-tagline">Нотариална кантора в Бургас.<br>Правна сигурност с десетилетна традиция.</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">// Навигация</p>
+          <ul>
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html">За нотариуса</a></li>
+            <li><a href="services.html">Услуги</a></li>
+            <li><a href="faq.html">Въпроси</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">// Работно време</p>
+          <ul>
+            <li><a href="#">Пон–Пет: 09:00–17:30</a></li>
+            <li><a href="#">Събота: 10:00–13:00</a></li>
+            <li><a href="#">Неделя: затворено</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">// Контакти</p>
+          <p class="footer-contact-item">ул. Александровска 42<br>Бургас 8000, България</p>
+          <p class="footer-contact-item">+359 56 800 100</p>
+          <p class="footer-contact-item">office@notarius-mono.bg</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Нотариус Моно — Всички права запазени</span>
+        <span class="footer-copy">Рег. № 412 — Нотариална камара на България</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFAQ(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function filterFAQ() {
+      const query = document.getElementById('faqSearch').value.toLowerCase().trim();
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.querySelector('.faq-q-text').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer-text').textContent.toLowerCase();
+        item.classList.toggle('hidden', query.length > 0 && !text.includes(query) && !answer.includes(query));
+      });
+      // show/hide groups
+      document.querySelectorAll('.faq-group').forEach(group => {
+        const visible = [...group.querySelectorAll('.faq-item')].some(i => !i.classList.contains('hidden'));
+        group.style.display = visible ? '' : 'none';
+      });
+    }
+
+    function filterCategory(cat, btn) {
+      // Update active button
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Clear search
+      document.getElementById('faqSearch').value = '';
+      // Filter items
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('hidden');
+        if (cat !== 'all' && item.dataset.category !== cat) {
+          item.classList.add('hidden');
+        }
+      });
+      // Show/hide groups
+      document.querySelectorAll('.faq-group').forEach(group => {
+        const visible = [...group.querySelectorAll('.faq-item')].some(i => !i.classList.contains('hidden'));
+        group.style.display = visible ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

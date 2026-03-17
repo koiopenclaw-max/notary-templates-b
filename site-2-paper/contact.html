@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Контакти – Нотариус Перо и Печат</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --parchment-light: #f4e4c1;
+      --parchment-mid:   #e8d5a3;
+      --parchment-dark:  #d4bf8a;
+      --sepia-deep:      #704214;
+      --sepia-mid:       #8B6914;
+      --ink-dark:        #2c1810;
+      --ink-mid:         #3d2b1f;
+      --cream:           #fdf6e3;
+      --shadow:          rgba(44,24,16,0.25);
+      --error:           #8b1a1a;
+      --success:         #2a5a2a;
+    }
+
+    body {
+      font-family: 'Crimson Text', Georgia, serif;
+      background-color: var(--parchment-light);
+      color: var(--ink-dark);
+      background-image:
+        radial-gradient(ellipse at 10% 18%, rgba(139,105,20,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 80%, rgba(112,66,20,0.07) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: linear-gradient(180deg, var(--ink-dark) 0%, var(--ink-mid) 100%);
+      border-bottom: 3px solid var(--sepia-mid);
+      padding: 0 2rem;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 3px 12px var(--shadow);
+    }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { font-family: 'IM Fell English', serif; color: var(--parchment-light); font-size: 1.15rem; text-decoration: none; letter-spacing: 0.04em; }
+    .nav-brand span { color: var(--sepia-mid); }
+    .nav-links { display: flex; gap: 0; list-style: none; }
+    .nav-links a {
+      display: block; padding: 0 1.1rem; height: 64px; line-height: 64px;
+      color: var(--parchment-mid); text-decoration: none;
+      font-family: 'Crimson Text', serif; font-size: 1.05rem; letter-spacing: 0.03em;
+      transition: color 0.2s, background 0.2s; border-bottom: 3px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--parchment-light); border-bottom-color: var(--sepia-mid); background: rgba(255,255,255,0.05); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--parchment-light); margin: 5px 0; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeInUp   { from { opacity:0; transform:translateY(20px);  } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn     { from { opacity:0; } to { opacity:1; } }
+    @keyframes stampIn    { 0%{opacity:0;transform:scale(1.3) rotate(-12deg);}60%{transform:scale(0.93) rotate(3deg);}100%{opacity:1;transform:scale(1) rotate(0deg);} }
+
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      background:
+        linear-gradient(rgba(44,24,16,0.72), rgba(44,24,16,0.64)),
+        url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop') center/cover no-repeat;
+      padding: 5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      border: 2px solid rgba(139,105,20,0.3);
+      margin: 20px;
+      pointer-events: none;
+    }
+    .hero-banner h1 { font-family: 'IM Fell English', serif; color: var(--parchment-light); font-size: clamp(1.8rem, 4vw, 3rem); animation: fadeInDown 0.9s ease both; }
+    .hero-banner p { color: var(--parchment-mid); font-style: italic; font-size: 1.2rem; margin-top: 0.8rem; animation: fadeInDown 0.9s 0.25s ease both; }
+    .breadcrumb { color: rgba(232,213,163,0.7); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .breadcrumb a { color: var(--parchment-mid); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ── LAYOUT ── */
+    .contact-section { padding: 5rem 1.5rem; }
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    /* ── FORM ── */
+    .form-document {
+      background: var(--cream);
+      border: 2px solid var(--parchment-dark);
+      padding: 3rem 3.5rem;
+      box-shadow: 8px 10px 40px var(--shadow), inset 0 0 50px rgba(139,105,20,0.05);
+      position: relative;
+      animation: fadeInUp 0.8s 0.2s ease both;
+    }
+    .form-document::before { content: ''; position: absolute; inset: 10px; border: 1px solid var(--sepia-mid); opacity: 0.2; pointer-events: none; }
+
+    /* ruled lines behind form */
+    .form-document::after {
+      content: '';
+      position: absolute;
+      top: 80px; left: 0; right: 0; bottom: 0;
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 31px,
+        rgba(139,105,20,0.07) 32px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+    .form-document > * { position: relative; z-index: 1; }
+
+    .form-header {
+      text-align: center;
+      border-bottom: 2px solid var(--sepia-mid);
+      padding-bottom: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .form-header .ornament {
+      display: block;
+      font-size: 1.2rem;
+      color: var(--sepia-mid);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.4rem;
+    }
+    .form-header h2 {
+      font-family: 'IM Fell English', serif;
+      color: var(--ink-dark);
+      font-size: 1.7rem;
+    }
+    .form-header p {
+      font-style: italic;
+      color: var(--sepia-deep);
+      font-size: 1rem;
+      margin-top: 0.3rem;
+    }
+
+    .form-row { margin-bottom: 1.4rem; }
+    .form-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.4rem;
+    }
+    label {
+      display: block;
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem;
+      color: var(--sepia-deep);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+    label .req { color: var(--error); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--parchment-dark);
+      padding: 0.45rem 0.3rem;
+      font-family: 'Crimson Text', serif;
+      font-size: 1.1rem;
+      color: var(--ink-dark);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+      border-bottom-color: var(--sepia-mid);
+      background: rgba(139,105,20,0.04);
+    }
+    select { cursor: pointer; }
+    textarea { resize: vertical; min-height: 120px; border: 1px solid var(--parchment-dark); padding: 0.6rem 0.5rem; }
+    textarea:focus { border-color: var(--sepia-mid); }
+
+    .form-divider {
+      border: none;
+      border-top: 1px dashed var(--parchment-dark);
+      margin: 1.8rem 0;
+    }
+
+    .form-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      margin-bottom: 1.6rem;
+    }
+    .form-consent input[type="checkbox"] {
+      width: 18px; height: 18px; min-width: 18px;
+      margin-top: 3px;
+      accent-color: var(--sepia-deep);
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--ink-dark), var(--ink-mid));
+      color: var(--parchment-light);
+      border: none;
+      padding: 1rem;
+      font-family: 'IM Fell English', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 4px 4px 0 var(--sepia-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    .submit-btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 var(--sepia-mid);
+      background: linear-gradient(135deg, var(--sepia-deep), var(--ink-dark));
+    }
+    .submit-btn:active { transform: translate(0,0); box-shadow: 2px 2px 0 var(--sepia-mid); }
+
+    .form-note {
+      font-size: 0.88rem;
+      color: var(--sepia-mid);
+      text-align: center;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      background: var(--cream);
+      border: 2px solid var(--sepia-mid);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      animation: stampIn 0.6s ease both;
+    }
+    .success-msg.visible { display: block; }
+    .success-msg .stamp-mark {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      animation: stampIn 0.7s 0.2s ease both;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    .success-msg h3 { font-family: 'IM Fell English', serif; color: var(--ink-dark); font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .success-msg p { color: var(--sepia-deep); font-style: italic; font-size: 1.05rem; }
+
+    /* ── SIDEBAR ── */
+    .contact-sidebar { animation: fadeInUp 0.8s 0.4s ease both; }
+
+    .info-card {
+      background: var(--cream);
+      border: 1px solid var(--parchment-dark);
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 4px 4px 0 var(--parchment-dark);
+      position: relative;
+    }
+    .info-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--sepia-mid), var(--sepia-deep));
+    }
+    .info-card h3 {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.2rem;
+      color: var(--ink-dark);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--parchment-dark);
+      padding-bottom: 0.5rem;
+    }
+    .info-row {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+    .info-row .icon { color: var(--sepia-mid); min-width: 20px; text-align: center; margin-top: 2px; }
+
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+    .hours-table tr td { padding: 0.3rem 0; font-size: 1rem; color: var(--ink-mid); }
+    .hours-table tr td:first-child { color: var(--sepia-deep); font-style: italic; }
+    .hours-table tr:not(:last-child) td { border-bottom: 1px dashed var(--parchment-dark); }
+    .hours-table tr td:last-child { text-align: right; }
+
+    .map-placeholder {
+      background:
+        linear-gradient(rgba(232,213,163,0.85), rgba(232,213,163,0.85)),
+        url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop') center/cover;
+      border: 1px solid var(--parchment-dark);
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute; inset: 8px;
+      border: 1px solid rgba(112,66,20,0.25);
+      pointer-events: none;
+    }
+    .map-label {
+      background: var(--ink-dark);
+      color: var(--parchment-light);
+      padding: 0.6rem 1.4rem;
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+
+    /* ── DIVIDER ── */
+    .divider { text-align: center; color: var(--sepia-mid); font-size: 1.4rem; letter-spacing: 0.5em; padding: 1rem 0; }
+
+    /* ── FOOTER ── */
+    footer { background: linear-gradient(180deg, #1e110b 0%, var(--ink-dark) 100%); color: var(--parchment-mid); padding: 3.5rem 1.5rem 1.5rem; border-top: 3px solid var(--sepia-mid); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(139,105,20,0.3); }
+    .footer-col h4 { font-family: 'IM Fell English', serif; color: var(--parchment-light); font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(139,105,20,0.4); padding-bottom: 0.5rem; }
+    .footer-col p, .footer-col li { font-size: 0.98rem; line-height: 1.9; list-style: none; }
+    .footer-col a { color: var(--parchment-mid); text-decoration: none; }
+    .footer-col a:hover { color: var(--parchment-light); text-decoration: underline; }
+    .footer-bottom { max-width: 1100px; margin: 1.2rem auto 0; text-align: center; font-size: 0.85rem; color: rgba(232,213,163,0.5); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .contact-inner { grid-template-columns: 1fr; }
+      .contact-sidebar { order: -1; }
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--ink-dark); border-bottom: 2px solid var(--sepia-mid); }
+      .nav-links.open { display: flex; }
+      .nav-links a { height: auto; line-height: 1; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .nav-toggle { display: block; }
+      .form-document { padding: 2rem 1.4rem; }
+      .form-row-split { grid-template-columns: 1fr; gap: 0; }
+      .form-row-split .form-row { margin-bottom: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Нотариус <span>Перо &amp; Печат</span></a>
+    <button class="nav-toggle" aria-label="Меню" onclick="this.nextElementSibling.classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нотариуса</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="faq.html">Въпроси</a></li>
+      <li><a href="contact.html" class="active">Контакти</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <p class="breadcrumb"><a href="index.html">Начало</a> &rsaquo; Контакти</p>
+  <h1>Контакти</h1>
+  <p>Запишете консултация или се свържете с нас</p>
+</div>
+
+<!-- MAIN CONTACT SECTION -->
+<section class="contact-section">
+  <div class="contact-inner">
+
+    <!-- FORM -->
+    <div>
+      <div class="form-document" id="formWrap">
+        <div class="form-header">
+          <span class="ornament">✦ ✦ ✦</span>
+          <h2>Запази консултация</h2>
+          <p>Попълнете формуляра и ние ще се свържем с вас</p>
+        </div>
+
+        <form id="consultForm" novalidate>
+
+          <div class="form-row-split">
+            <div class="form-row">
+              <label for="name">Три имена <span class="req">*</span></label>
+              <input type="text" id="name" name="name" placeholder="Иван Иванов" required />
+            </div>
+            <div class="form-row">
+              <label for="phone">Телефон <span class="req">*</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="+359 88 123 4567" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Имейл адрес <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="ivan@example.com" required />
+          </div>
+
+          <div class="form-row-split">
+            <div class="form-row">
+              <label for="service">Тип услуга <span class="req">*</span></label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>— Изберете —</option>
+                <option value="zaverika">Нотариална заверка</option>
+                <option value="palnomoshno">Пълномощно</option>
+                <option value="udostoverenie">Удостоверение</option>
+                <option value="prepis">Препис</option>
+                <option value="dogovor">Договор</option>
+                <option value="imot">Имотна сделка</option>
+                <option value="zaveshanie">Завещание</option>
+                <option value="drugo">Друго</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="date">Предпочитана дата</label>
+              <input type="date" id="date" name="date" />
+            </div>
+          </div>
+
+          <hr class="form-divider" />
+
+          <div class="form-row">
+            <label for="description">Описание / Допълнителна информация</label>
+            <textarea id="description" name="description" placeholder="Опишете накратко от каква нотариална услуга имате нужда…"></textarea>
+          </div>
+
+          <div class="form-consent">
+            <input type="checkbox" id="consent" name="consent" required />
+            <label for="consent" style="margin:0; font-family:'Crimson Text',serif; font-size:0.95rem; color:var(--ink-mid); letter-spacing:0; font-style:normal;">
+              Съгласен/а съм с обработката на личните ми данни за целите на записването на час, съгласно действащото законодателство за защита на личните данни (GDPR).
+            </label>
+          </div>
+
+          <button type="submit" class="submit-btn">Изпрати заявката</button>
+          <p class="form-note">Ще ви се обадим в рамките на работния ден за потвърждение.</p>
+        </form>
+
+        <div class="success-msg" id="successMsg">
+          <span class="stamp-mark">✦</span>
+          <h3>Заявката е получена!</h3>
+          <p>Благодарим ви. Ще се свържем с вас в рамките на работния ден за потвърждение на часа.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="contact-sidebar">
+
+      <div class="info-card">
+        <h3>Адрес и телефон</h3>
+        <div class="info-row">
+          <span class="icon">📍</span>
+          <span>ул. „Цар Борис III" № 14, ет. 2<br>Пловдив 4000, България</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📞</span>
+          <span><a href="tel:+35932123456" style="color:var(--sepia-deep); text-decoration:none;">032 123 456</a></span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📱</span>
+          <span><a href="tel:+359881234567" style="color:var(--sepia-deep); text-decoration:none;">088 123 4567</a></span>
+        </div>
+        <div class="info-row">
+          <span class="icon">✉</span>
+          <span><a href="mailto:info@notarius-plovdiv.bg" style="color:var(--sepia-deep); text-decoration:none;">info@notarius-plovdiv.bg</a></span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Работно време</h3>
+        <table class="hours-table">
+          <tr><td>Понеделник</td><td>09:00 – 17:30</td></tr>
+          <tr><td>Вторник</td><td>09:00 – 17:30</td></tr>
+          <tr><td>Сряда</td><td>09:00 – 17:30</td></tr>
+          <tr><td>Четвъртък</td><td>09:00 – 17:30</td></tr>
+          <tr><td>Петък</td><td>09:00 – 17:00</td></tr>
+          <tr><td>Събота</td><td>Почивен ден</td></tr>
+          <tr><td>Неделя</td><td>Почивен ден</td></tr>
+        </table>
+        <p style="font-size:0.9rem; color:var(--sepia-mid); font-style:italic; margin-top:0.8rem;">* В официални празници кантората е затворена.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Нотариална камара</h3>
+        <p style="font-size:1rem; color:var(--ink-mid); line-height:1.7;">Нотариус Елена Борисова е вписана в регистъра на <strong>Нотариалната камара на Република България</strong> под рег. № 214, с район на действие Пловдивски районен съд.</p>
+        <p style="font-size:0.9rem; color:var(--sepia-mid); margin-top:0.5rem; font-style:italic;">Проверка в регистъра: <a href="https://www.notarius.bg" target="_blank" style="color:var(--sepia-deep);">notarius.bg</a></p>
+      </div>
+
+      <div class="map-placeholder">
+        <div class="map-label">📍 ул. „Цар Борис III" № 14, Пловдив</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider">— ✦ ✦ ✦ —</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Нотариус Перо и Печат</h4>
+      <p>Нотариална кантора с дългогодишен опит в сферата на нотариалните услуги в Пловдив и региона.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Бързи връзки</h4>
+      <ul>
+        <li><a href="index.html">Начало</a></li>
+        <li><a href="about.html">За нотариуса</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="faq.html">Въпроси</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Работно време</h4>
+      <p>Понеделник – Петък<br>09:00 – 17:30</p>
+      <p style="margin-top:0.5rem;">Събота – Неделя<br>Почивен ден</p>
+    </div>
+    <div class="footer-col">
+      <h4>Контакти</h4>
+      <p>📍 ул. „Цар Борис III" 14, ет. 2<br>Пловдив 4000</p>
+      <p style="margin-top:0.5rem;">📞 <a href="tel:+35932123456">032 123 456</a></p>
+      <p>✉ <a href="mailto:info@notarius-plovdiv.bg">info@notarius-plovdiv.bg</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Нотариус Перо и Печат – Пловдив. Всички права запазени.</p>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    // Set min date to today for the date picker
+    var dateInput = document.getElementById('date');
+    if (dateInput) {
+      var today = new Date();
+      var yyyy = today.getFullYear();
+      var mm   = String(today.getMonth() + 1).padStart(2, '0');
+      var dd   = String(today.getDate()).padStart(2, '0');
+      dateInput.min = yyyy + '-' + mm + '-' + dd;
+    }
+
+    // Form submit handler
+    var form = document.getElementById('consultForm');
+    var successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Basic validation
+      var name    = document.getElementById('name').value.trim();
+      var phone   = document.getElementById('phone').value.trim();
+      var email   = document.getElementById('email').value.trim();
+      var service = document.getElementById('service').value;
+      var consent = document.getElementById('consent').checked;
+
+      var errors = [];
+      if (!name)    errors.push('Моля, въведете три имена.');
+      if (!phone)   errors.push('Моля, въведете телефон.');
+      if (!email || !/\S+@\S+\.\S+/.test(email)) errors.push('Моля, въведете валиден имейл.');
+      if (!service) errors.push('Моля, изберете тип услуга.');
+      if (!consent) errors.push('Моля, потвърдете съгласието за обработка на данни.');
+
+      if (errors.length > 0) {
+        alert(errors.join('\n'));
+        return;
+      }
+
+      // Simulate submission
+      form.style.display = 'none';
+      successMsg.classList.add('visible');
+
+      // Scroll success into view
+      successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  })();
+</script>
+
+</body>
+</html>
